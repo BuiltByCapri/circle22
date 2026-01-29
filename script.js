@@ -27,19 +27,19 @@
 
     // Audio Toggle
     function setupAudioToggle() {
-        audioToggle.addEventListener('click', toggleAudio);
+        if (audioToggle) {
+            audioToggle.addEventListener('click', toggleAudio);
+        }
     }
 
     function toggleAudio() {
         isAudioEnabled = !isAudioEnabled;
         audioToggle.classList.toggle('active', isAudioEnabled);
         audioStatus.textContent = isAudioEnabled ? 'On' : 'Off';
+        audioToggle.setAttribute('aria-pressed', String(isAudioEnabled));
 
         if (isAudioEnabled) {
-            // Only play if we're past scene 3 (where ambient sound makes sense)
-            if (currentScene >= 3) {
-                playAmbientSound();
-            }
+            playAmbientSound();
         } else {
             pauseAmbientSound();
         }
@@ -50,12 +50,16 @@
 
     function playAmbientSound() {
         if (ambientSound && isAudioEnabled) {
-            ambientSound.volume = 0.3;
+            ambientSound.volume = 0.25;
             const playPromise = ambientSound.play();
             
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
                     console.log('Audio playback prevented:', error);
+                    // Reset state if blocked
+                    isAudioEnabled = false;
+                    audioToggle.classList.remove('active');
+                    audioStatus.textContent = 'Off';
                 });
             }
         }
@@ -64,32 +68,21 @@
     function pauseAmbientSound() {
         if (ambientSound) {
             ambientSound.pause();
-        }
-    }
-
-    function fadeOutAudio() {
-        if (ambientSound && !ambientSound.paused) {
-            const fadeInterval = setInterval(() => {
-                if (ambientSound.volume > 0.05) {
-                    ambientSound.volume -= 0.05;
-                } else {
-                    ambientSound.volume = 0;
-                    ambientSound.pause();
-                    clearInterval(fadeInterval);
-                }
-            }, 50);
+            ambientSound.currentTime = 0; // Reset to beginning
         }
     }
 
     // Elevator Button
     function setupElevatorButton() {
-        circle22Button.addEventListener('click', pressButton);
-        circle22Button.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                pressButton();
-            }
-        });
+        if (circle22Button) {
+            circle22Button.addEventListener('click', pressButton);
+            circle22Button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    pressButton();
+                }
+            });
+        }
     }
 
     function pressButton() {
@@ -113,7 +106,9 @@
     }
 
     function openElevatorDoors() {
-        scene2.classList.add('open');
+        if (scene2) {
+            scene2.classList.add('open');
+        }
     }
 
     // Scroll Management
@@ -152,7 +147,6 @@
         switch(sceneId) {
             case 'scene1':
                 currentScene = 1;
-                pauseAmbientSound();
                 break;
                 
             case 'scene2':
@@ -164,8 +158,6 @@
                 
             case 'scene3':
                 currentScene = 3;
-                // Ensure audio is off for reading
-                pauseAmbientSound();
                 break;
         }
     }
@@ -236,12 +228,6 @@
         }
     }
 
-    // Track analytics (placeholder for future implementation)
-    function trackInteraction(action) {
-        // Example: window.gtag('event', action, { 'event_category': 'Circle22' });
-        console.log('Interaction:', action);
-    }
-
     // Initialize everything when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
@@ -264,55 +250,6 @@
         scrollToScene,
         toggleAudio,
         currentScene: () => currentScene
-    };document.addEventListener("DOMContentLoaded", () => {
-  const toggleBtn = document.getElementById("audioToggle");
-  const statusEl = document.getElementById("audioStatus");
-  const waves = toggleBtn?.querySelectorAll(".audio-waves");
-  const audio = document.getElementById("ambientAudio");
-
-  if (!toggleBtn || !statusEl || !audio) return;
-
-  let isOn = false;
-  audio.volume = 0.25; // adjust to taste (0.15–0.3 is a good range)
-
-  const updateUI = () => {
-    statusEl.textContent = isOn ? "On" : "Off";
-    toggleBtn.setAttribute("aria-pressed", String(isOn));
-
-    // Optional: visually mute the waves when Off
-    if (waves && waves.length) {
-      waves.forEach((p) => (p.style.opacity = isOn ? "1" : "0"));
-    }
-  };
-
-  const turnOn = async () => {
-    try {
-      await audio.play();
-      isOn = true;
-      updateUI();
-    } catch (err) {
-      // If the browser blocks playback, keep it Off.
-      isOn = false;
-      updateUI();
-      console.warn("Audio playback was blocked. Click again to enable sound.");
-    }
-  };
-
-  const turnOff = () => {
-    audio.pause();
-    // optional: restart from beginning when toggled back on
-    audio.currentTime = 0;
-    isOn = false;
-    updateUI();
-  };
-
-  toggleBtn.addEventListener("click", () => {
-    if (isOn) turnOff();
-    else turnOn();
-  });
-
-  updateUI();
-});
-
+    };
 
 })();
