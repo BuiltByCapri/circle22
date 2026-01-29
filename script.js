@@ -264,6 +264,55 @@
         scrollToScene,
         toggleAudio,
         currentScene: () => currentScene
-    };
+    };document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("audioToggle");
+  const statusEl = document.getElementById("audioStatus");
+  const waves = toggleBtn?.querySelectorAll(".audio-waves");
+  const audio = document.getElementById("ambientAudio");
+
+  if (!toggleBtn || !statusEl || !audio) return;
+
+  let isOn = false;
+  audio.volume = 0.25; // adjust to taste (0.15–0.3 is a good range)
+
+  const updateUI = () => {
+    statusEl.textContent = isOn ? "On" : "Off";
+    toggleBtn.setAttribute("aria-pressed", String(isOn));
+
+    // Optional: visually mute the waves when Off
+    if (waves && waves.length) {
+      waves.forEach((p) => (p.style.opacity = isOn ? "1" : "0"));
+    }
+  };
+
+  const turnOn = async () => {
+    try {
+      await audio.play();
+      isOn = true;
+      updateUI();
+    } catch (err) {
+      // If the browser blocks playback, keep it Off.
+      isOn = false;
+      updateUI();
+      console.warn("Audio playback was blocked. Click again to enable sound.");
+    }
+  };
+
+  const turnOff = () => {
+    audio.pause();
+    // optional: restart from beginning when toggled back on
+    audio.currentTime = 0;
+    isOn = false;
+    updateUI();
+  };
+
+  toggleBtn.addEventListener("click", () => {
+    if (isOn) turnOff();
+    else turnOn();
+  });
+
+  updateUI();
+});
+
 
 })();
