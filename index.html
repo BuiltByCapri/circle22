@@ -1,138 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Circle 22 - A private gathering for intentional connection">
-    <title>Circle 22</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Audio Toggle (Opt-in) -->
-    <button id="audioToggle" class="audio-toggle" aria-label="Toggle ambient sound">
-        <svg class="audio-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-            <path class="audio-waves" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
-        </svg>
-        <span class="audio-label">Sound: <span id="audioStatus">Off</span></span>
-    </button>
 
-    <!-- Hidden Audio Element -->
-    <audio id="ambientSound" loop>
-        <source src="assets/ambient-room.mp3" type="audio/mpeg">
-    </audio>
+<section id="invite" class="invite-section" aria-labelledby="inviteTitle" hidden>
+  <div class="invite-card">
+    <h1 id="inviteTitle">Circle 22</h1>
 
-    <!-- Scene 1: Elevator Panel -->
-    <section id="scene1" class="scene scene-elevator">
-        <div class="scene-content">
-            <div class="elevator-panel">
-                <div class="panel-frame">
-                    <button id="circle22Button" class="elevator-button" aria-label="Circle 22 button">
-                        <span class="button-label">CIRCLE 22</span>
-                        <span class="button-glow"></span>
-                    </button>
-                </div>
-            </div>
-            <p class="scene-instruction fade-in">Press to enter</p>
-        </div>
-    </section>
+    <h2>What This Is</h2>
+    <p>
+      Circle 22 is a structured evening for single professionals who value thoughtful conversation and deliberate connection.
+      It is not a dating app, a networking event, or an open mixer.
+    </p>
+    <p>
+      Each gathering is small, between 16 and 24 people, and designed around shared context: a theme, a question,
+      or a format that rewards presence.
+    </p>
 
-    <!-- Scene 2: Elevator Doors Opening -->
-    <section id="scene2" class="scene scene-doors">
-        <div class="elevator-doors">
-            <div class="door door-left"></div>
-            <div class="door door-right"></div>
-        </div>
-        <div class="hallway-reveal">
-            <div class="hallway-gradient"></div>
-        </div>
-    </section>
+    <h2>How It Works</h2>
+    <p>
+      You request an invitation through a brief form. We review each request individually and extend invitations based on alignment with the group.
+    </p>
+    <p>
+      Gatherings happen on a periodic basis. There are no tickets, no walk-ins, and no plus-ones.
+    </p>
 
-    <!-- Scene 3: Approaching the Door -->
-    <section id="scene3" class="scene scene-hallway">
-        <div class="scene-content">
-            <div class="door-container">
-                <div class="door-frame">
-                    <div class="door-number">22</div>
-                    <div class="door-light"></div>
-                </div>
-            </div>
-            <p class="scene-instruction">Voices behind the door</p>
-        </div>
-    </section>
+    <h2>Who This Is For</h2>
+    <p>
+      Circle 22 is designed for professionals in their 30s, 40s, and early 50s who are looking for something more considered than apps or large social events.
+    </p>
+    <p><strong>This is not for everyone. That’s intentional.</strong></p>
 
-    <!-- Scene 4: Door Slams -->
-    <section id="scene4" class="scene scene-slam">
-        <div class="scene-content">
-            <div class="door-slam-effect">
-                <div class="slam-ripple"></div>
-            </div>
-            <p class="scene-instruction fade-in-late">Silence</p>
-        </div>
-    </section>
+    <h2>March 2026</h2>
+    <p>We’re currently accepting requests for gatherings in Houston, Texas.</p>
 
-    <!-- Scene 5: The Invitation -->
-    <section id="scene5" class="scene scene-invitation">
-        <div class="scene-content">
-            <div class="envelope-container">
-                <!-- Wax Seal -->
-                <div class="wax-seal">
-                    <img src="assets/wax-seal.png" alt="Circle 22 wax seal" class="seal-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="seal-fallback">
-                        <div class="seal-circle">
-                            <span class="seal-number">22</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Main Content -->
-                <div class="invitation-content">
-                    <h1 class="invitation-title">Circle 22</h1>
-                    <p class="invitation-subtitle">A private gathering for people who prefer intention over volume</p>
-                    
-                    <div class="invitation-body">
-                        <section class="content-block">
-                            <h2>What This Is</h2>
-                            <p>Circle 22 is a structured evening for single professionals who value thoughtful conversation and deliberate connection. It is not a dating app, a networking event, or an open mixer.</p>
-                            <p>Each gathering is small—between 16 and 24 people—and designed around shared context: a theme, a question, or a format that rewards presence.</p>
-                        </section>
+    <div class="cta-row">
+      <a class="cta" href="https://tally.so/r/A7BZQo">
+        Request an Invitation
+      </a>
+      <a class="secondary" href="#top">Return</a>
+    </div>
 
-                        <section class="content-block">
-                            <h2>How It Works</h2>
-                            <p>You request an invitation through a brief form. We review each request individually and extend invitations based on alignment with the group.</p>
-                            <p>Gatherings happen once per season in select cities. There are no tickets, no walk-ins, and no plus-ones.</p>
-                        </section>
-
-                        <section class="content-block">
-                            <h2>Who This Is For</h2>
-                            <p>Circle 22 is designed for professionals in their 30s, 40s, and early 50s who are looking for something more considered than apps or large social events.</p>
-                            <p>This is not for everyone. That's intentional.</p>
-                        </section>
-
-                        <section class="content-block">
-                            <h2>Spring 2026</h2>
-                            <p>We're currently accepting requests for gatherings in New York, San Francisco, and Los Angeles.</p>
-                        </section>
-                    </div>
-
-                    <div class="cta-container">
-                        <a href="https://example.com" class="cta-button">Request an Invitation</a>
-                    </div>
-
-                    <footer class="invitation-footer">
-                        <p>Questions? <a href="mailto:hello@circle22.com">hello@circle22.com</a></p>
-                    </footer>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script src="script.js"></script>
-</body>
-</html>
+    <p class="micro">
+      If accepted, you’ll hear from us directly.
+    </p>
+  </div>
+</section>
