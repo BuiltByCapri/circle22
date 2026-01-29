@@ -1,22 +1,25 @@
+[README.md](https://github.com/user-attachments/files/24926865/README.md)
 # Circle 22 - Private Invitation Website
 
 A cinematic, scroll-based single-page website for Circle 22, featuring an elegant narrative journey from elevator to invitation.
 
-## 🎬 Features
+## Features
 
-- **Scroll-based narrative**: Five cinematic scenes that tell a story
+- **Scroll-based narrative**: Three elegant scenes - elevator button, doors opening, invitation reveal
 - **Interactive elevator button**: Press to begin the journey
-- **Opt-in audio**: Toggle ambient sound (no autoplay)
+- **Opt-in audio**: Toggle ambient sound (no autoplay, optional)
 - **Responsive design**: Beautiful on all devices
 - **Accessibility-focused**: Keyboard navigation, reduced motion support, high contrast
 - **Fast loading**: Pure HTML/CSS/JS with no build tools required
 - **Free hosting ready**: Optimized for GitHub Pages
+- **Thank you page**: Elegant post-submission confirmation page
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 circle22/
-├── index.html          # Main HTML structure
+├── index.html          # Main landing page with elevator journey
+├── thank-you.html      # Post-submission confirmation page
 ├── styles.css          # All styles and animations
 ├── script.js           # Interactive functionality
 ├── assets/             # Media files (you need to add these)
@@ -25,7 +28,7 @@ circle22/
 └── README.md           # This file
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Option 1: View Locally
 
@@ -68,7 +71,7 @@ circle22/
    - In Settings → Pages, add your custom domain
    - Follow GitHub's instructions for DNS configuration
 
-## 🎨 Customizing Assets
+## Customizing Assets
 
 ### 1. Wax Seal Image
 
@@ -164,20 +167,22 @@ Simply edit the text between the HTML tags:
 
 ### 6. Changing the CTA Link
 
-In `index.html`, find the CTA button:
+The CTA button links to your Tally form:
 
 ```html
-<a href="https://example.com" class="cta-button">Request an Invitation</a>
+<a href="https://tally.so/r/A7BZQo" class="cta-button" target="_blank" rel="noopener noreferrer">Request an Invitation</a>
 ```
 
-Replace `https://example.com` with your form URL:
-- Google Forms
-- Typeform
-- Airtable Form
-- Tally.so
-- JotForm
+**Setting up the thank you page redirect:**
+1. In your Tally form settings, go to "After submission"
+2. Choose "Redirect to URL"
+3. Enter your GitHub Pages URL + `/thank-you.html`
+   - Example: `https://yourusername.github.io/circle22/thank-you.html`
+4. Save the form settings
 
-## ⚙️ Technical Details
+Now when someone submits the form, they'll be redirected to your elegant thank you page.
+
+## Technical Details
 
 ### Browser Support
 - Chrome 90+
@@ -205,7 +210,7 @@ Replace `https://example.com` with your form URL:
 - Animations simply won't play
 - All content remains readable
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Wax seal isn't showing
 1. Check that `assets/wax-seal.png` exists
@@ -249,7 +254,7 @@ Or edit specific animations:
 }
 ```
 
-## 📝 Customization Ideas
+## Customization Ideas
 
 ### Add your logo
 In `scene5`, add before `.invitation-title`:
@@ -286,7 +291,7 @@ Replace CTA with embedded form from:
 - Substack
 - EmailOctopus
 
-## 🎯 SEO & Meta Tags
+## SEO & Meta Tags
 
 Add these to `<head>` for better sharing:
 
@@ -308,7 +313,7 @@ Add these to `<head>` for better sharing:
 
 Create a `social-share.png` (1200x630px) with your brand visuals.
 
-## 🔒 Privacy & Security
+## Privacy & Security
 
 This site:
 - Uses no cookies
@@ -321,7 +326,7 @@ For production, consider adding:
 - Cookie consent (if you add analytics later)
 - HTTPS (GitHub Pages provides this automatically)
 
-## 📊 Adding Analytics (Optional)
+## Adding Analytics (Optional)
 
 To track visits, add Google Analytics or Plausible:
 
@@ -342,7 +347,7 @@ To track visits, add Google Analytics or Plausible:
 <script defer data-domain="yourdomain.com" src="https://plausible.io/js/script.js"></script>
 ```
 
-## 📞 Support
+## Support
 
 For questions or issues:
 1. Check the Troubleshooting section above
@@ -350,11 +355,11 @@ For questions or issues:
 3. Test in a different browser
 4. Verify all files are uploaded correctly
 
-## 📜 License
+## License
 
 This code is provided as-is for Circle 22. You may modify and use it as needed for your project.
 
-## 🎨 Credits
+## Credits
 
 - Fonts: Google Fonts (Cormorant Garamond, Inter)
 - Built with: HTML5, CSS3, Vanilla JavaScript
