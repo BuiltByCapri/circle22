@@ -22,35 +22,12 @@
         </svg>
         <span class="audio-label">Sound: <span id="audioStatus">Off</span></span>
     </button>
-<audio id="ambientAudio" loop preload="auto">
-  <source src="assets/Circle-22-Site-Audio.m4a" type="audio/mp4">
-</audio>
 
     <!-- Audio Element -->
-   <audio id="ambientAudio" loop preload="auto">
-  <source src="Site-Audio.m4a" type="audio/mp4">
-</audio>
-    <script>
-  const audio = document.getElementById("ambientAudio");
-  audio.volume = 0;
-
-  function fadeInAudio() {
-    audio.play().catch(() => {});
-    let vol = 0;
-    const fade = setInterval(() => {
-      if (vol < 0.25) {
-        vol += 0.01;
-        audio.volume = vol;
-      } else {
-        clearInterval(fade);
-      }
-    }, 100);
-    document.removeEventListener("click", fadeInAudio);
-  }
-
-  document.addEventListener("click", fadeInAudio);
-</script>
-
+    <audio id="ambientSound" loop preload="auto">
+        <source src="assets/Circle-22-Site-Audio.m4a" type="audio/mp4">
+        <source src="assets/ambient-room.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Scene 1: Elevator Panel -->
     <section id="scene1" class="scene scene-elevator">
