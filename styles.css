@@ -71,11 +71,6 @@ body {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
-.audio-toggle:focus {
-    outline: 2px solid var(--color-oxblood);
-    outline-offset: 2px;
-}
-
 .audio-icon {
     width: 20px;
     height: 20px;
@@ -93,11 +88,6 @@ body {
 @keyframes soundWaves {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
-}
-
-.audio-label {
-    font-weight: 500;
-    letter-spacing: 0.02em;
 }
 
 /* Scene Base Styles */
@@ -129,10 +119,6 @@ body {
 
 .scene-instruction.fade-in {
     animation: fadeIn 1.5s ease-out 0.5s forwards;
-}
-
-.scene-instruction.fade-in-late {
-    animation: fadeIn 2s ease-out 1.5s forwards;
 }
 
 @keyframes fadeIn {
@@ -177,14 +163,6 @@ body {
 
 .elevator-button:hover {
     transform: scale(1.05);
-    box-shadow: 
-        0 6px 20px rgba(0, 0, 0, 0.5),
-        inset 0 2px 4px rgba(255, 255, 255, 0.15);
-}
-
-.elevator-button:focus {
-    outline: 3px solid var(--color-oxblood);
-    outline-offset: 4px;
 }
 
 .button-label {
@@ -227,9 +205,7 @@ body {
     50% { opacity: 1; transform: scale(1.1); }
 }
 
-* Add these styles to your existing styles.css */
-
-/* Scene 2: Elevator Doors - Enhanced */
+/* Scene 2: Elevator Doors */
 .scene-doors {
     position: relative;
     overflow: hidden;
@@ -260,15 +236,12 @@ body {
 
 .door-left {
     left: 0;
-    transform-origin: left center;
 }
 
 .door-right {
     right: 0;
-    transform-origin: right center;
 }
 
-/* Door opening animation - SIMPLIFIED */
 .scene-doors.open .door-left {
     transform: translateX(-100%);
 }
@@ -277,7 +250,7 @@ body {
     transform: translateX(100%);
 }
 
-/* Welcome Message - BIGGER */
+/* Welcome Message */
 .welcome-message {
     position: absolute;
     top: 50%;
@@ -305,122 +278,7 @@ body {
     text-shadow: 0 4px 30px rgba(201, 169, 97, 0.4);
 }
 
-/* Responsive welcome message */
-@media (max-width: 768px) {
-    .welcome-message h2 {
-        font-size: 4.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .welcome-message h2 {
-        font-size: 3rem;
-    }
-}
-: 100%;
-    background: linear-gradient(180deg, 
-        #1A1A1A 0%, 
-        #2A2A2A 30%, 
-        #3A3A3A 60%, 
-        #2A2A2A 100%
-    );
-}
-
-/* Scene 3: Hallway Door */
-.scene-hallway {
-    background: linear-gradient(180deg, #2A2A2A 0%, #1A1A1A 100%);
-}
-
-.door-container {
-    perspective: 1000px;
-}
-
-.door-frame {
-    width: 200px;
-    height: 320px;
-    margin: 0 auto;
-    background: linear-gradient(145deg, #4A3A2A, #2A1A1A);
-    border-radius: 8px;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-    animation: doorApproach 2s ease-out forwards;
-}
-
-@keyframes doorApproach {
-    from {
-        transform: scale(0.7) translateZ(-100px);
-        opacity: 0.5;
-    }
-    to {
-        transform: scale(1) translateZ(0);
-        opacity: 1;
-    }
-}
-
-.door-number {
-    position: absolute;
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--font-serif);
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: var(--color-gold);
-}
-
-.door-light {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(184, 151, 90, 0.6) 50%, 
-        transparent 100%
-    );
-    animation: lightFlicker 3s ease-in-out infinite;
-}
-
-@keyframes lightFlicker {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
-    75% { opacity: 0.4; }
-}
-
-/* Scene 4: Door Slam */
-.scene-slam {
-    background: #0A0A0A;
-}
-
-.door-slam-effect {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto;
-    position: relative;
-}
-
-.slam-ripple {
-    width: 100%;
-    height: 100%;
-    border: 2px solid var(--color-oxblood);
-    border-radius: 50%;
-    opacity: 0;
-    animation: slamRipple 2s ease-out forwards;
-}
-
-@keyframes slamRipple {
-    0% {
-        transform: scale(0.5);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(3);
-        opacity: 0;
-    }
-}
-
-/* Scene 5: The Invitation */
+/* Scene 3: Invitation */
 .scene-invitation {
     background: var(--color-cream);
     min-height: 100vh;
@@ -434,8 +292,7 @@ body {
     border-radius: 4px;
     box-shadow: 
         0 2px 8px rgba(0, 0, 0, 0.08),
-        0 8px 32px rgba(0, 0, 0, 0.12),
-        0 16px 64px rgba(0, 0, 0, 0.08);
+        0 8px 32px rgba(0, 0, 0, 0.12);
     position: relative;
     padding: 4rem 3rem;
     opacity: 0;
@@ -466,47 +323,6 @@ body {
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
-}
-
-.seal-fallback {
-    display: none;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-}
-
-.seal-circle {
-    width: 90px;
-    height: 90px;
-    background: radial-gradient(circle, var(--color-oxblood) 0%, #6A1E1E 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 
-        0 4px 12px rgba(139, 46, 46, 0.4),
-        inset 0 2px 4px rgba(0, 0, 0, 0.3);
-    position: relative;
-}
-
-.seal-circle::before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
-    border: 2px solid rgba(139, 46, 46, 0.3);
-    border-radius: 50%;
-}
-
-.seal-number {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--color-parchment);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* Invitation Content */
@@ -560,10 +376,6 @@ body {
     margin-bottom: 1rem;
 }
 
-.content-block p:last-child {
-    margin-bottom: 0;
-}
-
 /* CTA */
 .cta-container {
     margin: 4rem auto 3rem;
@@ -589,12 +401,6 @@ body {
 .cta-button:hover {
     background: var(--color-oxblood);
     color: var(--color-parchment);
-    box-shadow: 0 4px 16px rgba(139, 46, 46, 0.3);
-}
-
-.cta-button:focus {
-    outline: 2px solid var(--color-oxblood);
-    outline-offset: 4px;
 }
 
 /* Footer */
@@ -611,247 +417,32 @@ body {
     color: var(--color-charcoal-light);
 }
 
-.invitation-footer a {
-    color: var(--color-oxblood);
-    text-decoration: none;
-    transition: color var(--transition-smooth);
-}
-
-.invitation-footer a:hover {
-    color: var(--color-oxblood-light);
-    text-decoration: underline;
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
-    .audio-toggle {
-        top: 1rem;
-        right: 1rem;
-        padding: 0.5rem 1rem;
-        font-size: 0.75rem;
+    .welcome-message h2 {
+        font-size: 4.5rem;
     }
-
-    .audio-icon {
-        width: 18px;
-        height: 18px;
-    }
-
-    .scene {
-        padding: 1.5rem;
-    }
-
-    .panel-frame {
-        padding: 2rem 1.5rem;
-    }
-
-    .elevator-button {
-        width: 140px;
-        height: 140px;
-    }
-
-    .button-label {
-        font-size: 0.875rem;
-    }
-
-    .door-frame {
-        width: 160px;
-        height: 260px;
-    }
-
-    .door-number {
-        font-size: 2rem;
-        top: 1.5rem;
-    }
-
-    .envelope-container {
-        padding: 3rem 2rem;
-    }
-
-    .wax-seal {
-        width: 80px;
-        height: 80px;
-        top: -35px;
-    }
-
-    .seal-circle {
-        width: 70px;
-        height: 70px;
-    }
-
-    .seal-number {
-        font-size: 1.5rem;
-    }
-
+    
     .invitation-title {
         font-size: 2.5rem;
     }
-
-    .invitation-subtitle {
-        font-size: 1rem;
-    }
-
-    .content-block h2 {
-        font-size: 1.25rem;
-    }
-
-    .content-block p {
-        font-size: 0.9375rem;
-    }
-
-    .cta-button {
-        padding: 0.875rem 2rem;
-        font-size: 0.9375rem;
+    
+    .envelope-container {
+        padding: 3rem 2rem;
     }
 }
 
 @media (max-width: 480px) {
-    .scene-instruction {
-        font-size: 0.75rem;
-    }
-
-    .elevator-button {
-        width: 120px;
-        height: 120px;
-    }
-
-    .button-label {
-        font-size: 0.75rem;
-    }
-
-    .envelope-container {
-        padding: 2.5rem 1.5rem;
-    }
-
-    .invitation-title {
-        font-size: 2rem;
-    }
-
-    .invitation-subtitle {
-        font-size: 0.9375rem;
-        margin-bottom: 2rem;
-    }
-
-    .content-block {
-        margin-bottom: 2rem;
-    }
-
-    .cta-container {
-        margin: 3rem auto 2rem;
-    }
-}
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* Print Styles */
-@media print {
-    .audio-toggle {
-        display: none;
-    }
-
-    .scene-elevator,
-    .scene-doors,
-    .scene-hallway,
-    .scene-slam {
-        display: none;
-    }
-
-    .scene-invitation {
-        min-height: auto;
-    }/* Add these styles to your existing styles.css */
-
-/* Scene 2: Elevator Doors - Enhanced */
-.scene-doors {
-    position: relative;
-    overflow: hidden;
-}
-
-.elevator-doors {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-}
-
-.door {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%);
-    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 10;
-}
-
-.door-left {
-    left: 0;
-    transform-origin: left center;
-}
-
-.door-right {
-    right: 0;
-    transform-origin: right center;
-}
-
-/* Door opening animation */
-.scene-doors.open .door-left {
-    transform: translateX(-100%);
-}
-
-.scene-doors.open .door-right {
-    transform: translateX(100%);
-}
-
-/* Welcome Message */
-.welcome-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    z-index: 5;
-}
-
-.scene-doors.open .welcome-message {
-    opacity: 1;
-    transition-delay: 0.8s; /* Appears after doors start opening */
-}
-
-.welcome-message h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 4rem;
-    font-weight: 300;
-    color: #C9A961;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin: 0;
-    text-shadow: 0 2px 20px rgba(201, 169, 97, 0.3);
-}
-
-/* Responsive welcome message */
-@media (max-width: 768px) {
     .welcome-message h2 {
         font-size: 3rem;
     }
-}
-
-@media (max-width: 480px) {
-    .welcome-message h2 {
+    
+    .invitation-title {
         font-size: 2rem;
     }
-}
-
-
-    .envelope-container {
-        box-shadow: none;
-        page-break-inside: avoid;
+    
+    .elevator-button {
+        width: 120px;
+        height: 120px;
     }
 }
