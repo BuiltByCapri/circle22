@@ -88,15 +88,15 @@
             navigator.vibrate(50);
         }
 
-        // Wait 1 second, then open doors
+        // Wait .05 seconds, then open doors
         setTimeout(() => {
             scene2.classList.add('open');
             
-            // Wait for doors to open (1.5s), then scroll to content
+            // Wait for doors to open (1s), then scroll to content
             setTimeout(() => {
                 scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 1500);
-        }, 1000);
+            }, 750);
+        }, 500);
     }
 
     // Scroll Management
