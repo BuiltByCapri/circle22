@@ -1,6 +1,4 @@
 // Circle 22 - Interactive Narrative Experience
-// Scroll-based cinematic journey with audio controls
-
 (function() {
     'use strict';
 
@@ -14,7 +12,9 @@
     const audioStatus = document.getElementById('audioStatus');
     const ambientSound = document.getElementById('ambientSound');
     const circle22Button = document.getElementById('circle22Button');
+    const scene1 = document.getElementById('scene1');
     const scene2 = document.getElementById('scene2');
+    const scene3 = document.getElementById('scene3');
     const scenes = document.querySelectorAll('.scene');
 
     // Initialize
@@ -44,7 +44,6 @@
             pauseAmbientSound();
         }
 
-        // Save preference
         localStorage.setItem('circle22_audio', isAudioEnabled);
     }
 
@@ -56,7 +55,6 @@
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
                     console.log('Audio playback prevented:', error);
-                    // Reset state if blocked
                     isAudioEnabled = false;
                     audioToggle.classList.remove('active');
                     audioStatus.textContent = 'Off';
@@ -68,58 +66,37 @@
     function pauseAmbientSound() {
         if (ambientSound) {
             ambientSound.pause();
-            ambientSound.currentTime = 0; // Reset to beginning
+            ambientSound.currentTime = 0;
         }
     }
 
-  // SIMPLIFIED ELEVATOR DOOR SCRIPT
-// Add this to your existing script.js or replace the elevator button section
-
-const circle22Button = document.getElementById('circle22Button');
-const scene1 = document.getElementById('scene1');
-const scene2 = document.getElementById('scene2');
-const scene3 = document.getElementById('scene3');
-
-let buttonPressed = false;
-
-circle22Button.addEventListener('click', pressButton);
-
-function pressButton() {
-    if (buttonPressed) return;
-
-    buttonPressed = true;
-    circle22Button.classList.add('pressed');
-    
-    // Haptic feedback (if supported)
-    if (navigator.vibrate) {
-        navigator.vibrate(50);
+    // Elevator Button - SIMPLIFIED
+    function setupElevatorButton() {
+        if (circle22Button) {
+            circle22Button.addEventListener('click', pressButton);
+        }
     }
 
-    // Wait 1 second, then open doors and scroll to content
-    setTimeout(() => {
-        // Add 'open' class to scene2 (triggers door animation)
-        scene2.classList.add('open');
+    function pressButton() {
+        if (buttonPressed) return;
+
+        buttonPressed = true;
+        circle22Button.classList.add('pressed');
         
-        // Wait for doors to open (1.5s animation), then scroll to scene 3
-        setTimeout(() => {
-            scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 1500);
-    }, 1000);
-}
-
-        // Open elevator doors and scroll to invitation
-        setTimeout(() => {
-            openElevatorDoors();
-            setTimeout(() => {
-                scrollToScene(3);
-            }, 1500);
-        }, 800);
-    }
-
-    function openElevatorDoors() {
-        if (scene2) {
-            scene2.classList.add('open');
+        // Haptic feedback
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
         }
+
+        // Wait 1 second, then open doors
+        setTimeout(() => {
+            scene2.classList.add('open');
+            
+            // Wait for doors to open (1.5s), then scroll to content
+            setTimeout(() => {
+                scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 1500);
+        }, 1000);
     }
 
     // Scroll Management
@@ -133,7 +110,7 @@ function pressButton() {
         }
     }
 
-    // Intersection Observer for Scene Transitions
+    // Intersection Observer
     function setupScrollObserver() {
         const observerOptions = {
             root: null,
@@ -159,14 +136,9 @@ function pressButton() {
             case 'scene1':
                 currentScene = 1;
                 break;
-                
             case 'scene2':
                 currentScene = 2;
-                if (!scene.classList.contains('open') && buttonPressed) {
-                    scene.classList.add('open');
-                }
                 break;
-                
             case 'scene3':
                 currentScene = 3;
                 break;
@@ -176,7 +148,6 @@ function pressButton() {
     // Keyboard Navigation
     function setupKeyboardNavigation() {
         document.addEventListener('keydown', (e) => {
-            // Arrow down / Space: Next scene
             if (e.key === 'ArrowDown' || (e.key === ' ' && e.target === document.body)) {
                 e.preventDefault();
                 if (currentScene < 3) {
@@ -184,7 +155,6 @@ function pressButton() {
                 }
             }
             
-            // Arrow up: Previous scene
             if (e.key === 'ArrowUp') {
                 e.preventDefault();
                 if (currentScene > 1) {
@@ -192,107 +162,24 @@ function pressButton() {
                 }
             }
 
-            // Escape: Scroll to invitation
             if (e.key === 'Escape') {
                 scrollToScene(3);
             }
         });
     }
 
-    // Load saved audio preference
-    function loadAudioPreference() {
-        const savedPreference = localStorage.getItem('circle22_audio');
-        if (savedPreference === 'true') {
-            // Don't auto-enable, just mark as preferred
-            // User must still interact to start audio
-        }
+    // Initialize on load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
     }
 
-    // Smooth reveal animations on page load
-    function initializeRevealAnimations() {
-        // Add staggered fade-ins for instruction text
-        const instructions = document.querySelectorAll('.scene-instruction');
-        instructions.forEach((instruction, index) => {
-            instruction.style.animationDelay = `${0.5 + index * 0.2}s`;
-        });
-    }
-
-    // Handle visibility change (pause audio when tab hidden)
+    // Handle tab visibility
     document.addEventListener('visibilitychange', () => {
         if (document.hidden) {
             pauseAmbientSound();
         }
     });
-
-    // Performance: Reduce animations on low-end devices
-    function checkPerformance() {
-        const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
-        if (isLowEnd) {
-            document.body.classList.add('reduce-motion');
-        }
-    }
-
-    // Prevent scrolling on scene 1 until button pressed
-    function lockScrollOnLoad() {
-        if (!buttonPressed) {
-            window.scrollTo(0, 0);
-        }
-    }
-
-    // Initialize everything when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            init();
-            loadAudioPreference();
-            initializeRevealAnimations();
-            checkPerformance();
-            lockScrollOnLoad();
-        });
-    } else {
-        init();
-        loadAudioPreference();
-        initializeRevealAnimations();
-        checkPerformance();
-        lockScrollOnLoad();
-    }
-
-    // Expose public methods for debugging// Add this to your existing script.js or replace the elevator button section
-
-function pressButton() {
-    if (buttonPressed) return;
-
-    buttonPressed = true;
-    circle22Button.classList.add('pressed');
-    
-    // Haptic feedback (if supported)
-    if (navigator.vibrate) {
-        navigator.vibrate(50);
-    }
-
-    // Open elevator doors
-    setTimeout(() => {
-        openElevatorDoors();
-        
-        // Show welcome message
-        setTimeout(() => {
-            // Scroll to invitation after doors open and welcome appears
-            setTimeout(() => {
-                scrollToScene(3);
-            }, 2500); // Wait for welcome message to be visible
-        }, 800);
-    }, 800);
-}
-
-function openElevatorDoors() {
-    if (scene2) {
-        scene2.classList.add('open');
-    }
-}
-
-    window.Circle22 = {
-        scrollToScene,
-        toggleAudio,
-        currentScene: () => currentScene
-    };
 
 })();
