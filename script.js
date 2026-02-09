@@ -77,27 +77,29 @@
         }
     }
 
-    function pressButton() {
-        if (buttonPressed) return;
+   function pressButton() {
+    if (buttonPressed) return;
 
-        buttonPressed = true;
-        circle22Button.classList.add('pressed');
-        
-        // Haptic feedback
-        if (navigator.vibrate) {
-            navigator.vibrate(50);
-        }
+    buttonPressed = true;
+    circle22Button.classList.add('pressed');
 
-        // Wait .05 seconds, then open doors
-        setTimeout(() => {
-            scene2.classList.add('open');
-            
-            // Wait for doors to open (1s), then scroll to content
-            setTimeout(() => {
-                scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 750);
-        }, 500);
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
     }
+
+    // STEP 1: scroll immediately to doors
+    scene2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // STEP 2: open doors once we arrive
+    setTimeout(() => {
+        scene2.classList.add('open');
+
+        // STEP 3: after doors open, move to invitation
+        setTimeout(() => {
+            scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 1200); // matches door animation timing
+    }, 700);
+}
 
     // Scroll Management
     function scrollToScene(sceneNumber) {
