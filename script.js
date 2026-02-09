@@ -72,29 +72,40 @@
         }
     }
 
-    // Elevator Button
-    function setupElevatorButton() {
-        if (circle22Button) {
-            circle22Button.addEventListener('click', pressButton);
-            circle22Button.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    pressButton();
-                }
-            });
-        }
+  // SIMPLIFIED ELEVATOR DOOR SCRIPT
+// Add this to your existing script.js or replace the elevator button section
+
+const circle22Button = document.getElementById('circle22Button');
+const scene1 = document.getElementById('scene1');
+const scene2 = document.getElementById('scene2');
+const scene3 = document.getElementById('scene3');
+
+let buttonPressed = false;
+
+circle22Button.addEventListener('click', pressButton);
+
+function pressButton() {
+    if (buttonPressed) return;
+
+    buttonPressed = true;
+    circle22Button.classList.add('pressed');
+    
+    // Haptic feedback (if supported)
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
     }
 
-    function pressButton() {
-        if (buttonPressed) return;
-
-        buttonPressed = true;
-        circle22Button.classList.add('pressed');
+    // Wait 1 second, then open doors and scroll to content
+    setTimeout(() => {
+        // Add 'open' class to scene2 (triggers door animation)
+        scene2.classList.add('open');
         
-        // Haptic feedback (if supported)
-        if (navigator.vibrate) {
-            navigator.vibrate(50);
-        }
+        // Wait for doors to open (1.5s animation), then scroll to scene 3
+        setTimeout(() => {
+            scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 1500);
+    }, 1000);
+}
 
         // Open elevator doors and scroll to invitation
         setTimeout(() => {
