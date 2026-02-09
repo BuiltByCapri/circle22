@@ -245,7 +245,39 @@
         lockScrollOnLoad();
     }
 
-    // Expose public methods for debugging
+    // Expose public methods for debugging// Add this to your existing script.js or replace the elevator button section
+
+function pressButton() {
+    if (buttonPressed) return;
+
+    buttonPressed = true;
+    circle22Button.classList.add('pressed');
+    
+    // Haptic feedback (if supported)
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+
+    // Open elevator doors
+    setTimeout(() => {
+        openElevatorDoors();
+        
+        // Show welcome message
+        setTimeout(() => {
+            // Scroll to invitation after doors open and welcome appears
+            setTimeout(() => {
+                scrollToScene(3);
+            }, 2500); // Wait for welcome message to be visible
+        }, 800);
+    }, 800);
+}
+
+function openElevatorDoors() {
+    if (scene2) {
+        scene2.classList.add('open');
+    }
+}
+
     window.Circle22 = {
         scrollToScene,
         toggleAudio,
