@@ -13,183 +13,33 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Circle 22 - A curated connection experience for Houston professionals">
-    <title>Circle 22</title>
+    <meta name="description" content="Circle 22 - March 26, 2026 - An intimate wine experience in Houston">
+    <title>Circle 22 | March 26, 2026</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     
-    <style>
-        :root {
-            --color-parchment: #F5F1E8;
-            --color-cream: #FAF7F0;
-            --color-charcoal: #2A2A2A;
-            --color-charcoal-light: #4A4A4A;
-            --color-oxblood: #8B2E2E;
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-sans);
-            font-size: 14px;
-            line-height: 1.7;
-            color: var(--color-charcoal);
-            background: var(--color-cream);
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Landing Section */
-        .landing {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .landing-container {
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 1s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .seal {
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 3rem;
-            background: radial-gradient(circle, var(--color-oxblood) 0%, #6A1E1E 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 
-                0 4px 12px rgba(139, 46, 46, 0.4),
-                inset 0 2px 4px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        .seal::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border: 2px solid rgba(139, 46, 46, 0.3);
-            border-radius: 50%;
-        }
-
-        .seal-number {
-            font-family: var(--font-serif);
-            font-size: 3rem;
-            font-weight: 600;
-            color: var(--color-parchment);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            font-family: var(--font-sans);
-            font-size: 0.9375rem;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            padding: 1rem 2rem;
-            border-radius: 2px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--color-oxblood);
-            color: var(--color-parchment);
-            box-shadow: 0 2px 8px rgba(139, 46, 46, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: #6A1E1E;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(139, 46, 46, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--color-charcoal);
-            border: 1px solid rgba(42, 42, 42, 0.3);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(42, 42, 42, 0.05);
-            border-color: rgba(42, 42, 42, 0.5);
-        }
-
-        /* Content Section (your existing content) */
-        .content {
-            padding: 4rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 480px) {
-            .landing {
-                padding: 1.5rem;
-            }
-
-            .seal {
-                width: 140px;
-                height: 140px;
-            }
-
-            .seal-number {
-                font-size: 2.5rem;
-            }
-
-            .buttons {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .btn {
-                width: 100%;
-                padding: 0.875rem 1.5rem;
-                font-size: 0.875rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <!-- Landing Section -->
-    <div class="landing">
+<body> 
+    <!-- Audio Toggle (Opt-in) -->
+    <button id="audioToggle" class="audio-toggle" aria-label="Toggle ambient sound">
+        <svg class="audio-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+            <path class="audio-waves" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <span class="audio-label">Sound: <span id="audioStatus">Off</span></span>
+    </button>
+
+    <!-- Audio Element -->
+    <audio id="ambientSound" loop preload="auto">
+        <source src="Site-Audio.m4a" type="audio/mp4">
+    </audio>
+
+    <!-- Scene 1: Elevator Panel -->
+   <div class="landing">
         <div class="landing-container">
             <div class="seal">
                 <span class="seal-number">22</span>
@@ -201,10 +51,33 @@
             </div>
         </div>
     </div>
+    <!-- Scene 2: Elevator Doors Opening (Transition) -->
+    <section id="scene2" class="scene scene-doors">
+        <div class="elevator-doors">
+            <div class="door door-left"></div>
+            <div class="door door-right"></div>
+        </div>
+        <div class="welcome-message">
+            <h2>Welcome</h2>
+        </div>
+    </section>
 
-    <!-- Content Section (your existing content goes here) -->
-    <div class="content" id="content">
-      <div class="invitation-content">
+    <!-- Scene 3: The Invitation -->
+    <section id="scene3" class="scene scene-invitation">
+        <div class="scene-content">
+            <div class="envelope-container">
+                <!-- Wax Seal -->
+                <div class="wax-seal">
+                    <img src="wax-seal.png" alt="Circle 22 wax seal" class="seal-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="seal-fallback">
+                        <div class="seal-circle">
+                            <span class="seal-number">22</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="invitation-content">
                     <h1 class="invitation-title">Circle 22</h1>
                     <p class="invitation-subtitle">A private gathering for people who prefer intention over volume</p>
                     
@@ -250,3 +123,6 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
