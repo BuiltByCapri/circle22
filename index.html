@@ -452,30 +452,37 @@
     </div>
 
     <script>
-        const landing = document.getElementById('landing');
-        const elevator = document.getElementById('elevator');
-        const content = document.getElementById('content');
-        const detailsBtn = document.getElementById('detailsBtn');
+    const landing = document.getElementById('landing');
+    const elevator = document.getElementById('elevator');
+    const content = document.getElementById('content');
+    const detailsBtn = document.getElementById('detailsBtn');
 
-        detailsBtn.addEventListener('click', () => {
-            // Hide landing
-            landing.classList.add('hidden');
+    detailsBtn.addEventListener('click', () => {
+        // Hide landing
+        landing.style.display = 'none';
+        
+        // Show elevator
+        elevator.style.display = 'flex';
+        elevator.classList.remove('hidden');
+        
+        // Force a reflow before adding the animation class
+        void elevator.offsetWidth;
+        
+        // Start door animation
+        elevator.classList.add('doors-opening');
+
+        // After doors open (2.5 seconds), show content
+        setTimeout(() => {
+            elevator.style.display = 'none';
+            content.style.display = 'flex';
             
-            // Show elevator and start door animation
-            elevator.classList.remove('hidden');
+            // Scroll after a brief delay
             setTimeout(() => {
-                elevator.classList.add('doors-opening');
-            }, 100);
-
-            // After doors open, scroll to content
-            setTimeout(() => {
-                elevator.classList.add('hidden');
-                content.style.display = 'flex';
-                setTimeout(() => {
-                    content.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-            }, 2500);
-        });
-    </script>
-</body>
-</html>
+                window.scrollTo({
+                    top: content.offsetTop,
+                    behavior: 'smooth'
+                });
+            }, 50);
+        }, 2500);
+    });
+</script>
