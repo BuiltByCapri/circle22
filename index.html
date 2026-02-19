@@ -189,9 +189,16 @@
         .door {
             width: 50%;
             height: 100%;
-            background: linear-gradient(to right, #2a2a2a, #1a1a1a);
             position: relative;
             transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .door-left {
+            background: linear-gradient(to left, #2a2a2a, #1a1a1a);
+        }
+
+        .door-right {
+            background: linear-gradient(to right, #2a2a2a, #1a1a1a);
         }
 
         .scene-doors.doors-opening .door-left {
@@ -431,18 +438,18 @@
             
             <h2>March 26, 2026</h2>
             <p>An evening of wine, conversation, and small delights. Twenty people. Pre-matched before you arrive.</p>
-            <p>This is what happens when you remove the apps, the algorithms, and the crowded rooms. You're left with a relaxed environment with people who are worth your time.</p>
+            <p>This is what happens when you remove the apps, the algorithms, and the crowded rooms.</p>
             
             <h2>What to Expect</h2>
             <p>Wine pairings, thoughtfully selected. Small bites worth remembering. Caviar, naturally.</p>
-            <p>Three courses, each an opportunity. We've curated the room with at least 6 people of the opposite sex who will match how you move. The rest is up to you.</p>
+            <p>Three courses, each an opportunity. We've curated the room. The rest is up to you.</p>
             
             <h2>How It Works</h2>
             <p>Apply. If accepted, you'll complete Circle 22's Compass - our behavioral matching system built on 4 elements of human connection.</p>
             <p>We use your responses to curate your evening. Twenty seats. Pre-matched. By invitation only.</p>
             
             <h2>Who This Is For</h2>
-            <p>Professionals in their 35+ who want something more deliberate than apps or mixers.</p>
+            <p>Professionals in their 30s, 40s, and early 50s who want something more deliberate than apps or mixers.</p>
             <p>This is not for everyone. That's intentional.</p>
             
             <div class="invitation-cta">
@@ -452,37 +459,38 @@
     </div>
 
     <script>
-    const landing = document.getElementById('landing');
-    const elevator = document.getElementById('elevator');
-    const content = document.getElementById('content');
-    const detailsBtn = document.getElementById('detailsBtn');
+        const landing = document.getElementById('landing');
+        const elevator = document.getElementById('elevator');
+        const content = document.getElementById('content');
+        const detailsBtn = document.getElementById('detailsBtn');
 
-    detailsBtn.addEventListener('click', () => {
-        // Hide landing
-        landing.style.display = 'none';
-        
-        // Show elevator
-        elevator.style.display = 'flex';
-        elevator.classList.remove('hidden');
-        
-        // Force a reflow before adding the animation class
-        void elevator.offsetWidth;
-        
-        // Start door animation
-        elevator.classList.add('doors-opening');
-
-        // After doors open (2.5 seconds), show content
-        setTimeout(() => {
-            elevator.style.display = 'none';
-            content.style.display = 'flex';
+        detailsBtn.addEventListener('click', () => {
+            // Hide landing
+            landing.style.display = 'none';
             
-            // Scroll after a brief delay
+            // Show elevator
+            elevator.style.display = 'flex';
+            elevator.classList.remove('hidden');
+            
+            // Force a reflow before adding the animation class
+            void elevator.offsetWidth;
+            
+            // Start door animation
+            elevator.classList.add('doors-opening');
+
+            // After doors open (2.5 seconds), show content
             setTimeout(() => {
-                window.scrollTo({
-                    top: content.offsetTop,
-                    behavior: 'smooth'
+                elevator.style.display = 'none';
+                content.style.display = 'flex';
+                
+                // Wait for content to render before scrolling
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
                 });
-            }, 50);
-        }, 2500);
-    });
-</script>
+            }, 2500);
+        });
+    </script>
+</body>
+</html>
