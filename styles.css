@@ -233,23 +233,21 @@ body {
     transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 10;
 }
-
 .door-left {
-    left: 0;
+    border-right: 1px solid #333;
 }
 
 .door-right {
-    right: 0;
+    border-left: 1px solid #333;
 }
 
-.scene-doors.open .door-left {
+.doors-opening .door-left {
     transform: translateX(-100%);
 }
 
-.scene-doors.open .door-right {
+.doors-opening .door-right {
     transform: translateX(100%);
 }
-
 /* Welcome Message */
 .welcome-message {
     position: absolute;
