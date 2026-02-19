@@ -27,6 +27,7 @@
             --color-charcoal: #2A2A2A;
             --color-charcoal-light: #4A4A4A;
             --color-oxblood: #8B2E2E;
+            --color-gold: #D4AF37;
             --font-serif: 'Cormorant Garamond', serif;
             --font-sans: 'Inter', sans-serif;
         }
@@ -55,25 +56,26 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            transition: opacity 0.5s ease;
         }
 
         .scene.hidden {
             display: none;
         }
 
-        /* Elevator Scene */
-        .scene-elevator {
+        /* Landing Page with Buttons */
+        .landing-page {
             background: #1a1a1a;
+            padding: 2rem;
         }
 
-        .scene-content {
+        .landing-content {
             text-align: center;
-            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
         }
 
-        .elevator-panel {
-            margin-bottom: 2rem;
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
 
         .panel-frame {
@@ -83,60 +85,96 @@
             box-shadow: 
                 inset 0 2px 10px rgba(0,0,0,0.5),
                 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 3rem;
+            display: inline-block;
         }
 
-        .elevator-button {
-            width: 160px;
-            height: 160px;
+        .circle-logo {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             background: radial-gradient(circle, var(--color-oxblood) 0%, #6A1E1E 100%);
             border: 3px solid rgba(139, 46, 46, 0.3);
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow: 
                 0 4px 12px rgba(139, 46, 46, 0.4),
                 inset 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            margin: 0 auto;
         }
 
-        .elevator-button:hover {
-            transform: scale(1.05);
-            box-shadow: 
-                0 6px 20px rgba(139, 46, 46, 0.6),
-                inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        .circle-logo::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid rgba(139, 46, 46, 0.3);
+            border-radius: 50%;
         }
 
-        .button-label {
+        .logo-text {
             font-family: var(--font-serif);
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 300;
             color: var(--color-parchment);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            letter-spacing: 0.1em;
-            position: relative;
-            z-index: 2;
-        }
-
-        .scene-instruction {
-            font-family: var(--font-sans);
-            font-size: 0.875rem;
             letter-spacing: 0.15em;
+        }
+
+        .landing-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .btn {
+            font-family: var(--font-sans);
+            font-size: 0.9375rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            color: rgba(245, 241, 232, 0.6);
-            margin-top: 2rem;
+            padding: 1rem 2rem;
+            border-radius: 2px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
         }
 
-        .fade-in {
-            animation: fadeIn 2s ease-in-out infinite;
+        .btn-primary {
+            background: var(--color-oxblood);
+            color: var(--color-parchment);
+            box-shadow: 0 2px 8px rgba(139, 46, 46, 0.3);
         }
 
-        @keyframes fadeIn {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
+        .btn-primary:hover {
+            background: #6A1E1E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 46, 46, 0.4);
         }
 
-        /* Doors Scene */
-        .scene-doors {
+        .btn-secondary {
+            background: transparent;
+            color: rgba(245, 241, 232, 0.8);
+            border: 1px solid rgba(245, 241, 232, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(245, 241, 232, 0.1);
+            border-color: rgba(245, 241, 232, 0.5);
+            color: var(--color-parchment);
+        }
+
+        /* Elevator Doors Scene */
+        .elevator-scene {
             background: #1a1a1a;
             overflow: hidden;
         }
@@ -185,37 +223,40 @@
 
         .welcome-message h2 {
             font-family: var(--font-serif);
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 300;
-            color: var(--color-charcoal);
-            letter-spacing: 0.1em;
+            color: var(--color-gold);
+            letter-spacing: 0.15em;
+            text-shadow: 0 4px 12px rgba(212, 175, 55, 0.5);
         }
 
-        /* Button Scene */
-        .scene-buttons {
-            padding: 2rem;
+        /* Content Section */
+        .content-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            background: var(--color-cream);
         }
 
-        .buttons-container {
-            max-width: 500px;
+        .content {
+            max-width: 900px;
             width: 100%;
+            background: var(--color-parchment);
+            border-radius: 4px;
+            padding: 4rem 3rem;
+            box-shadow: 
+                0 2px 8px rgba(0, 0, 0, 0.08),
+                0 8px 32px rgba(0, 0, 0, 0.12),
+                0 16px 64px rgba(0, 0, 0, 0.08);
             text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: slideIn 1s ease-out forwards;
-        }
-
-        @keyframes slideIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .seal {
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 3rem;
+            width: 100px;
+            height: 100px;
+            margin: -50px auto 2rem;
             background: radial-gradient(circle, var(--color-oxblood) 0%, #6A1E1E 100%);
             border-radius: 50%;
             display: flex;
@@ -230,97 +271,20 @@
         .seal::before {
             content: '';
             position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
             border: 2px solid rgba(139, 46, 46, 0.3);
             border-radius: 50%;
         }
 
         .seal-number {
             font-family: var(--font-serif);
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: 600;
             color: var(--color-parchment);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .content .seal {
-            width: 100px;
-            height: 100px;
-            margin: -50px auto 2rem;
-        }
-
-        .content .seal-number {
-            font-size: 2rem;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            font-family: var(--font-sans);
-            font-size: 0.9375rem;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            padding: 1rem 2rem;
-            border-radius: 2px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--color-oxblood);
-            color: var(--color-parchment);
-            box-shadow: 0 2px 8px rgba(139, 46, 46, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: #6A1E1E;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(139, 46, 46, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--color-charcoal);
-            border: 1px solid rgba(42, 42, 42, 0.3);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(42, 42, 42, 0.05);
-            border-color: rgba(42, 42, 42, 0.5);
-        }
-
-        /* Content Section */
-        .content-wrapper {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4rem 2rem;
-        }
-
-        .content {
-            max-width: 900px;
-            width: 100%;
-            background: var(--color-parchment);
-            border-radius: 4px;
-            padding: 4rem 3rem;
-            box-shadow: 
-                0 2px 8px rgba(0, 0, 0, 0.08),
-                0 8px 32px rgba(0, 0, 0, 0.12),
-                0 16px 64px rgba(0, 0, 0, 0.08);
-            text-align: center;
         }
 
         .content h1 {
@@ -353,6 +317,20 @@
             text-align: left;
         }
 
+        .invitation-cta {
+            margin-top: 3rem;
+            padding: 2rem;
+            border: 2px solid rgba(139, 46, 46, 0.2);
+            border-radius: 4px;
+            background: rgba(139, 46, 46, 0.03);
+        }
+
+        .invitation-cta .btn-primary {
+            padding: 1.25rem 3rem;
+            font-size: 1rem;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .content {
                 padding: 3rem 2rem;
@@ -365,38 +343,23 @@
             .content h2 {
                 font-size: 1.75rem;
             }
+
+            .welcome-message h2 {
+                font-size: 3rem;
+            }
         }
 
         @media (max-width: 480px) {
-            .seal {
-                width: 140px;
-                height: 140px;
+            .circle-logo {
+                width: 160px;
+                height: 160px;
             }
 
-            .seal-number {
-                font-size: 2.5rem;
+            .logo-text {
+                font-size: 1.5rem;
             }
 
-            .elevator-button {
-                width: 140px;
-                height: 140px;
-            }
-
-            .button-label {
-                font-size: 1.25rem;
-            }
-
-            .content .seal {
-                width: 80px;
-                height: 80px;
-                margin: -40px auto 1.5rem;
-            }
-
-            .content .seal-number {
-                font-size: 1.75rem;
-            }
-
-            .buttons {
+            .landing-buttons {
                 flex-direction: column;
                 gap: 0.75rem;
             }
@@ -405,6 +368,16 @@
                 width: 100%;
                 padding: 0.875rem 1.5rem;
                 font-size: 0.875rem;
+            }
+
+            .seal {
+                width: 80px;
+                height: 80px;
+                margin: -40px auto 1.5rem;
+            }
+
+            .seal-number {
+                font-size: 1.75rem;
             }
 
             .content-wrapper {
@@ -422,46 +395,38 @@
             .content h2 {
                 font-size: 1.5rem;
             }
+
+            .welcome-message h2 {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Scene 1: Elevator Panel -->
-    <section id="scene1" class="scene scene-elevator">
-        <div class="scene-content">
-            <div class="elevator-panel">
-                <div class="panel-frame">
-                    <button id="circle22Button" class="elevator-button" aria-label="Circle 22 button">
-                        <span class="button-label">CIRCLE 22</span>
-                    </button>
+    <!-- Landing Page: Logo + Two Buttons -->
+    <section id="landing" class="scene landing-page">
+        <div class="landing-content">
+            <div class="panel-frame">
+                <div class="circle-logo">
+                    <span class="logo-text">CIRCLE 22</span>
                 </div>
             </div>
-            <p class="scene-instruction fade-in">↑ Press to enter ↑</p>
+            
+            <div class="landing-buttons">
+                <button id="detailsBtn" class="btn btn-secondary">Press For Details</button>
+                <a href="https://tally.so/r/A7BZQo" class="btn btn-primary">Apply Now</a>
+            </div>
         </div>
     </section>
 
-    <!-- Scene 2: Elevator Doors Opening -->
-    <section id="scene2" class="scene scene-doors hidden">
+    <!-- Elevator Doors Opening Scene -->
+    <section id="elevator" class="scene elevator-scene hidden">
         <div class="elevator-doors">
             <div class="door door-left"></div>
             <div class="door door-right"></div>
         </div>
         <div class="welcome-message">
             <h2>Welcome</h2>
-        </div>
-    </section>
-
-    <!-- Scene 3: Two Buttons -->
-    <section id="scene3" class="scene scene-buttons hidden">
-        <div class="buttons-container">
-            <div class="seal">
-                <span class="seal-number">22</span>
-            </div>
-            
-            <div class="buttons">
-                <button onclick="scrollToContent()" class="btn btn-secondary">Press For Details</button>
-                <a href="https://tally.so/r/YOUR_FORM_ID" class="btn btn-primary">Apply Now</a>
-            </div>
         </div>
     </section>
 
@@ -491,43 +456,37 @@
             <p>Professionals in their 30s, 40s, and early 50s who want something more deliberate than apps or mixers.</p>
             <p>This is not for everyone. That's intentional.</p>
             
-            <p style="margin-top: 2rem;"><a href="https://tally.so/r/YOUR_FORM_ID" style="color: var(--color-oxblood); text-decoration: underline;">Request an Invitation</a></p>
-            <p style="font-size: 0.9375rem; margin-top: 1rem;">Questions? Use the request form above.</p>
+            <div class="invitation-cta">
+                <a href="https://tally.so/r/A7BZQo" class="btn btn-primary">Request an Invitation</a>
+            </div>
         </div>
     </div>
 
     <script>
-        // Elevator sequence
-        const scene1 = document.getElementById('scene1');
-        const scene2 = document.getElementById('scene2');
-        const scene3 = document.getElementById('scene3');
+        const landing = document.getElementById('landing');
+        const elevator = document.getElementById('elevator');
         const content = document.getElementById('content');
-        const elevatorButton = document.getElementById('circle22Button');
+        const detailsBtn = document.getElementById('detailsBtn');
 
-        elevatorButton.addEventListener('click', () => {
-            // Hide elevator panel
-            scene1.classList.add('hidden');
+        detailsBtn.addEventListener('click', () => {
+            // Hide landing
+            landing.classList.add('hidden');
             
-            // Show doors and start opening animation
-            scene2.classList.remove('hidden');
+            // Show elevator and start door animation
+            elevator.classList.remove('hidden');
             setTimeout(() => {
-                scene2.classList.add('doors-opening');
+                elevator.classList.add('doors-opening');
             }, 100);
 
-            // After doors open, show buttons
+            // After doors open, scroll to content
             setTimeout(() => {
-                scene2.classList.add('hidden');
-                scene3.classList.remove('hidden');
-            }, 2000);
+                elevator.classList.add('hidden');
+                content.style.display = 'flex';
+                setTimeout(() => {
+                    content.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }, 2500);
         });
-
-        function scrollToContent() {
-            scene3.classList.add('hidden');
-            content.style.display = 'flex';
-            setTimeout(() => {
-                content.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        }
     </script>
 </body>
 </html>
