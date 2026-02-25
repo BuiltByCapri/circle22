@@ -1,37 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-L69ZSBZE57"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-L69ZSBZE57');
-</script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Circle 22 - A curated connection experience for Houston professionals">
-    <title>Circle 22</title>
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
+    <title>Circle 22 - Houston's First Behavioral Matching Experience</title>
     <style>
-        :root {
-            --color-parchment: #F5F1E8;
-            --color-cream: #FAF7F0;
-            --color-charcoal: #2A2A2A;
-            --color-charcoal-light: #4A4A4A;
-            --color-oxblood: #8B2E2E;
-            --color-gold: #D4AF37;
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -39,458 +12,349 @@
         }
 
         body {
-            font-family: var(--font-sans);
-            font-size: 14px;
-            line-height: 1.7;
-            color: var(--color-charcoal);
-            background: var(--color-cream);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Scene Management */
-        .scene {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .scene.hidden {
-            display: none;
-        }
-
-        /* Landing Page with Buttons */
-        .landing-page {
-            background: #1a1a1a;
-            padding: 2rem;
-        }
-
-        .landing-content {
-            text-align: center;
-            opacity: 0;
-            animation: fadeIn 1s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .panel-frame {
-            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-            border-radius: 12px;
-            padding: 3rem 2rem;
-            box-shadow: 
-                inset 0 2px 10px rgba(0,0,0,0.5),
-                0 10px 30px rgba(0,0,0,0.3);
-            margin-bottom: 3rem;
-            display: inline-block;
-        }
-
-        .circle-logo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--color-oxblood) 0%, #6A1E1E 100%);
-            border: 3px solid rgba(139, 46, 46, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 
-                0 4px 12px rgba(139, 46, 46, 0.4),
-                inset 0 2px 4px rgba(0, 0, 0, 0.3);
-            position: relative;
-            margin: 0 auto;
-        }
-
-        .circle-logo::before {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border: 2px solid rgba(139, 46, 46, 0.3);
-            border-radius: 50%;
-        }
-
-        .logo-text {
-            font-family: var(--font-serif);
-            font-size: 1.75rem;
-            font-weight: 300;
-            color: var(--color-parchment);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            letter-spacing: 0.15em;
-        }
-
-        .landing-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .btn {
-            font-family: var(--font-sans);
-            font-size: 0.9375rem;
-            font-weight: 400;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            padding: 1rem 2rem;
-            border-radius: 2px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: var(--color-oxblood);
-            color: var(--color-parchment);
-            box-shadow: 0 2px 8px rgba(139, 46, 46, 0.3);
-        }
-
-        .btn-primary:hover {
-            background: #6A1E1E;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(139, 46, 46, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: rgba(245, 241, 232, 0.8);
-            border: 1px solid rgba(245, 241, 232, 0.3);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(245, 241, 232, 0.1);
-            border-color: rgba(245, 241, 232, 0.5);
-            color: var(--color-parchment);
-        }
-
-        /* Elevator Doors Scene */
-        .scene-doors {
-            background: #1a1a1a;
-            overflow: hidden;
-        }
-
-        .elevator-doors {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-        }
-
-        .door {
-            width: 50%;
-            height: 100%;
-            position: relative;
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .door-left {
-            background: linear-gradient(to left, #2a2a2a, #1a1a1a);
-        }
-
-        .door-right {
-            background: linear-gradient(to right, #2a2a2a, #1a1a1a);
-        }
-
-        .scene-doors.doors-opening .door-left {
-            transform: translateX(-100%);
-        }
-
-        .scene-doors.doors-opening .door-right {
-            transform: translateX(100%);
-        }
-
-        .welcome-message {
-            position: absolute;
-            z-index: 5;
-            opacity: 0;
-            transition: opacity 1s ease 0.5s;
-        }
-
-        .scene-doors.doors-opening .welcome-message {
-            opacity: 1;
-        }
-
-        .welcome-message h2 {
-            font-family: var(--font-serif);
-            font-size: 8rem;
-            font-weight: 300;
-            color: var(--color-gold);
-            letter-spacing: 0.15em;
-            text-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
-        }
-
-        /* Content Section */
-        .content-wrapper {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4rem 2rem;
-            background: var(--color-cream);
-        }
-
-        .content {
-            max-width: 900px;
-            width: 100%;
-            background: var(--color-parchment);
-            border-radius: 4px;
-            padding: 4rem 3rem;
-            box-shadow: 
-                0 2px 8px rgba(0, 0, 0, 0.08),
-                0 8px 32px rgba(0, 0, 0, 0.12),
-                0 16px 64px rgba(0, 0, 0, 0.08);
-            text-align: center;
-        }
-
-        .seal {
-            width: 100px;
-            height: 100px;
-            margin: -50px auto 2rem;
-            background: radial-gradient(circle, var(--color-oxblood) 0%, #6A1E1E 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 
-                0 4px 12px rgba(139, 46, 46, 0.4),
-                inset 0 2px 4px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-
-        .seal::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            border: 2px solid rgba(139, 46, 46, 0.3);
-            border-radius: 50%;
-        }
-
-        .seal-number {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--color-parchment);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .content h1 {
-            font-family: var(--font-serif);
-            font-size: 3rem;
-            font-weight: 400;
-            letter-spacing: 0.02em;
-            margin-bottom: 1rem;
-        }
-
-        .content .tagline {
-            font-size: 1.125rem;
-            color: var(--color-charcoal-light);
-            margin-bottom: 2.5rem;
-        }
-
-        .content h2 {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            font-weight: 500;
-            margin: 2.5rem 0 1rem;
-            text-align: left;
-        }
-
-        .content p {
-            font-size: 1.0625rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: #F5F1E8;
+            color: #05081C;
             line-height: 1.8;
-            color: var(--color-charcoal-light);
-            margin-bottom: 1rem;
-            text-align: left;
         }
 
-        .invitation-cta {
-            margin-top: 3rem;
-            padding: 2rem 0;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
         }
 
-        .invitation-cta .btn-primary {
-            padding: 1.25rem 3rem;
-            font-size: 1rem;
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .content {
-                padding: 3rem 2rem;
-            }
-
-            .content h1 {
-                font-size: 2.25rem;
-            }
-
-            .content h2 {
-                font-size: 1.75rem;
-            }
-
-            .welcome-message h2 {
-                font-size: 3rem;
-            }
+        .logo img {
+            width: 120px;
+            height: auto;
         }
 
-        @media (max-width: 480px) {
-            .circle-logo {
-                width: 160px;
-                height: 160px;
+        h1 {
+            font-size: 48px;
+            color: #8B2E2E;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 20px;
+            text-align: center;
+            font-style: italic;
+            color: #8B2E2E;
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: #8B2E2E;
+            margin-bottom: 20px;
+            margin-top: 60px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            background: white;
+            border: 2px solid #8B2E2E;
+        }
+
+        .cta-section h2 {
+            margin-top: 0;
+        }
+
+        .waitlist-form {
+            max-width: 400px;
+            margin: 30px auto 0;
+        }
+
+        .waitlist-form input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #d4cfc4;
+            background: white;
+            color: #05081C;
+            font-family: 'Georgia', serif;
+            margin-bottom: 15px;
+        }
+
+        .waitlist-form input:focus {
+            outline: none;
+            border-color: #8B2E2E;
+        }
+
+        .waitlist-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: #8B2E2E;
+            color: #F5F1E8;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            transition: background-color 0.3s;
+        }
+
+        .waitlist-form button:hover {
+            background-color: #6d2323;
+        }
+
+        .waitlist-form .helper-text {
+            font-size: 14px;
+            color: #6d6d6d;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .success-message {
+            display: none;
+            background: #8B2E2E;
+            color: #F5F1E8;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .compass-elements {
+            margin: 40px 0;
+        }
+
+        .compass-elements ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .compass-elements li {
+            font-size: 18px;
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .compass-elements li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #8B2E2E;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid #d4cfc4;
+        }
+
+        .footer a {
+            color: #8B2E2E;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 36px;
             }
 
-            .logo-text {
-                font-size: 1.5rem;
+            h2 {
+                font-size: 24px;
             }
 
-            .landing-buttons {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-
-            .btn {
-                width: 100%;
-                padding: 0.875rem 1.5rem;
-                font-size: 0.875rem;
-            }
-
-            .seal {
-                width: 80px;
-                height: 80px;
-                margin: -40px auto 1.5rem;
-            }
-
-            .seal-number {
-                font-size: 1.75rem;
-            }
-
-            .content-wrapper {
-                padding: 3rem 1.5rem;
-            }
-
-            .content {
-                padding: 2.5rem 1.5rem;
-            }
-
-            .content h1 {
-                font-size: 2rem;
-            }
-
-            .content h2 {
-                font-size: 1.5rem;
-            }
-
-            .welcome-message h2 {
-                font-size: 2.5rem;
+            p {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Landing Page: Logo + Two Buttons -->
-    <section id="landing" class="scene landing-page">
-        <div class="landing-content">
-            <div class="panel-frame">
-                <div class="circle-logo">
-                    <span class="logo-text">CIRCLE 22</span>
-                </div>
-            </div>
-            
-            <div class="landing-buttons">
-                <button id="detailsBtn" class="btn btn-secondary">Press For Details</button>
-                <a href="https://tally.so/r/A7BZQo" class="btn btn-primary">Request an Invitation</a>
+    <div class="container">
+        <div class="logo">
+            <img src="logo.png" alt="Circle 22">
+        </div>
+
+        <h1>CIRCLE 22</h1>
+        <p class="tagline">Houston's first behavioral matching experience</p>
+
+        <p style="text-align: center; font-size: 22px; margin-bottom: 60px;">
+            Chemistry can't be swiped into existence.<br>
+            But compatibility can be measured.
+        </p>
+
+        <!-- WHAT IS CIRCLE 22 -->
+        <h2>WHAT IS CIRCLE 22?</h2>
+        <p>
+            Circle 22 is a curated connection experience for Houston singles who are tired of apps and mixers.
+        </p>
+        <p>
+            We match people based on behavioral compatibility—not demographics, not photos, not where you went to school.
+        </p>
+        <p>
+            How you show up. Your energy and tempo. What draws you in. How you hold connection.
+        </p>
+        <p>
+            This is what happens when you stop optimizing for volume and start optimizing for compatibility.
+        </p>
+
+        <!-- THE COMPASS -->
+        <h2>THE COMPASS</h2>
+        <p>
+            The Compass is our behavioral matching system.
+        </p>
+        <p>
+            It measures your four core connection elements:
+        </p>
+        <div class="compass-elements">
+            <ul>
+                <li><strong>The Needle</strong> (How You Show Up)</li>
+                <li><strong>The Rose</strong> (Energy & Tempo)</li>
+                <li><strong>The Bearing</strong> (What Draws You In)</li>
+                <li><strong>The Anchor</strong> (How You Hold Connection)</li>
+            </ul>
+        </div>
+        <p>
+            It takes 8-10 minutes. The results are yours to keep.
+        </p>
+        <p>
+            When applications for our first event open (April 2026), you'll take The Compass as part of the process.
+        </p>
+
+        <!-- HOW IT WORKS -->
+        <h2>HOW IT WORKS</h2>
+        <p><strong>1. Apply</strong></p>
+        <p>
+            We're not looking for a specific "type." We're looking for people who are intentional, open, and ready for something real.
+        </p>
+        <p><strong>2. Take The Compass</strong></p>
+        <p>
+            Our 22-question behavioral assessment reveals how you connect—not just who you are on paper.
+        </p>
+        <p><strong>3. Get matched</strong></p>
+        <p>
+            We curate the group based on compatibility. You'll meet people who match your energy, not just your demographics.
+        </p>
+        <p><strong>4. Show up</strong></p>
+        <p>
+            One evening. Pre-matched guests. Wine. Real conversation.
+        </p>
+        <p style="font-style: italic; text-align: center; margin-top: 30px;">
+            Chemistry's on you. Compatibility's on us.
+        </p>
+
+        <!-- WHO THIS IS FOR -->
+        <h2>WHO THIS IS FOR</h2>
+        <p>
+            Circle 22 is for Houston singles (32-52) who:
+        </p>
+        <div class="compass-elements">
+            <ul>
+                <li>Value intention over volume</li>
+                <li>Are tired of apps and mixers</li>
+                <li>Believe chemistry requires more than a swipe</li>
+                <li>Are ready for something real</li>
+            </ul>
+        </div>
+        <p style="font-style: italic; text-align: center; margin-top: 30px;">
+            This is not for everyone. That's intentional.
+        </p>
+
+        <!-- WAITLIST CTA -->
+        <div class="cta-section">
+            <h2>BE FIRST TO KNOW</h2>
+            <p>
+                Applications for our first event open April 2026.
+            </p>
+            <p>
+                Join the waitlist to be notified when applications go live.
+            </p>
+
+            <form class="waitlist-form" id="waitlist-form">
+                <input type="email" id="email" placeholder="Your email address" required>
+                <button type="submit">Join the Waitlist</button>
+                <p class="helper-text">By joining, you'll be the first to know when Event 1 applications open.</p>
+            </form>
+
+            <div class="success-message" id="success-message">
+                Thank you! You're on the list. We'll be in touch soon.
             </div>
         </div>
-    </section>
 
-    <!-- Elevator Doors Opening Scene -->
-    <section id="elevator" class="scene scene-doors hidden">
-        <div class="elevator-doors">
-            <div class="door door-left"></div>
-            <div class="door door-right"></div>
+        <!-- FOLLOW US -->
+        <div style="text-align: center; margin-top: 60px;">
+            <h2>FOLLOW ALONG</h2>
+            <p>
+                <a href="https://instagram.com/circle22htx" style="color: #8B2E2E; text-decoration: none; font-size: 20px;">@circle22htx</a> on Instagram
+            </p>
+            <p style="font-size: 16px; color: #6d6d6d; margin-top: 10px;">
+                We're sharing the journey—how we're building this, what we're learning, and what intentional dating looks like.
+            </p>
         </div>
-        <div class="welcome-message">
-            <h2>Welcome</h2>
-        </div>
-    </section>
 
-    <!-- Content Section -->
-    <div class="content-wrapper" id="content" style="display: none;">
-        <div class="content">
-            <div class="seal">
-                <span class="seal-number">22</span>
-            </div>
-            
-            <h1>Circle 22</h1>
-            <p class="tagline">A private gathering for people who prefer intention over volume</p>
-            
-            <h2>March 26, 2026</h2>
-            <p>An evening of wine, conversation, and small delights.</p>
-            <p>This is what happens when you remove the apps, the algorithms, and the crowded rooms. Because you deserve a relaxed setting where connection can flourish.</p>
-            
-            <h2>What to Expect</h2>
-            <p>Wine pairings, thoughtfully selected. Small bites worth remembering. Caviar, naturally.</p>
-            <p>Three courses, each an opportunity to explore a new connection with someone who understands how you move.</p> 
-
-            
-            <h2>How It Works</h2>
-            <p>Apply. If accepted, you'll complete Circle 22's Compass - our behavioral matching system built on 4 elements of human connection.</p>
-            <p>We use your responses to curate your evening. You'll meet six people who match your values, energy, and conversational style. Twenty seats total. Pre-matched. By invitation only.</p>
-            
-            <h2>Who This Is For</h2>
-            <p>Professionals who are 30+ who want something more deliberate than apps or mixers.</p>
-            <p>This is not for everyone. That's intentional.</p>
-            
-            <div class="invitation-cta">
-                <a href="https://tally.so/r/A7BZQo" class="btn btn-primary">Request an Invitation</a>
-            </div>
+        <!-- FOOTER -->
+        <div class="footer">
+            <p>
+                <a href="https://circle22houston.com">circle22houston.com</a> | 
+                <a href="https://instagram.com/circle22htx">@circle22htx</a>
+            </p>
+            <p style="font-size: 14px; color: #6d6d6d; margin-top: 10px;">
+                © 2026 Circle 22. Houston, TX.
+            </p>
         </div>
     </div>
 
     <script>
-        const landing = document.getElementById('landing');
-        const elevator = document.getElementById('elevator');
-        const content = document.getElementById('content');
-        const detailsBtn = document.getElementById('detailsBtn');
-
-        detailsBtn.addEventListener('click', () => {
-            // Hide landing
-            landing.style.display = 'none';
+        // Waitlist form submission
+        document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            // Show elevator
-            elevator.style.display = 'flex';
-            elevator.classList.remove('hidden');
+            const email = document.getElementById('email').value;
+            const button = document.querySelector('.waitlist-form button');
+            const form = document.getElementById('waitlist-form');
+            const successMessage = document.getElementById('success-message');
             
-            // Force a reflow before adding the animation class
-            void elevator.offsetWidth;
+            // Disable button
+            button.textContent = 'Joining...';
+            button.disabled = true;
             
-            // Start door animation
-            elevator.classList.add('doors-opening');
-
-            // After doors open (2.5 seconds), show content
-            setTimeout(() => {
-                elevator.style.display = 'none';
-                content.style.display = 'flex';
-                
-                // Wait for content to render before scrolling
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        content.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    });
+            // TODO: Replace with your actual Google Apps Script URL
+            const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+            
+            try {
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email: email })
                 });
-            }, 2500);
+                
+                // Show success message
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                button.textContent = 'Try Again';
+                button.disabled = false;
+                alert('Something went wrong. Please try again.');
+            }
         });
     </script>
 </body>
