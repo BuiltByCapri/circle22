@@ -12,6 +12,7 @@
     const audioStatus = document.getElementById('audioStatus');
     const ambientSound = document.getElementById('ambientSound');
     const circle22Button = document.getElementById('circle22Button');
+    const moreDetailsBtn = document.getElementById('moreDetailsBtn');
     const scene1 = document.getElementById('scene1');
     const scene2 = document.getElementById('scene2');
     const scene3 = document.getElementById('scene3');
@@ -21,6 +22,7 @@
     function init() {
         setupAudioToggle();
         setupElevatorButton();
+        setupMoreDetailsButton();
         setupScrollObserver();
         setupKeyboardNavigation();
     }
@@ -70,36 +72,48 @@
         }
     }
 
-    // Elevator Button - SIMPLIFIED
+    // Elevator Button
     function setupElevatorButton() {
         if (circle22Button) {
             circle22Button.addEventListener('click', pressButton);
         }
     }
 
-   function pressButton() {
-    if (buttonPressed) return;
+    function pressButton() {
+        if (buttonPressed) return;
 
-    buttonPressed = true;
-    circle22Button.classList.add('pressed');
+        buttonPressed = true;
+        circle22Button.classList.add('pressed');
 
-    if (navigator.vibrate) {
-        navigator.vibrate(50);
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+
+        // STEP 1: scroll immediately to doors
+        scene2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // STEP 2: open doors once we arrive
+        setTimeout(() => {
+            scene2.classList.add('open');
+
+            // STEP 3: after doors open, move to invitation
+            setTimeout(() => {
+                scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 1200); // matches door animation timing
+        }, 700);
     }
 
-    // STEP 1: scroll immediately to doors
-    scene2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // More Details Button - scrolls directly to content
+    function setupMoreDetailsButton() {
+        if (moreDetailsBtn) {
+            moreDetailsBtn.addEventListener('click', goToDetails);
+        }
+    }
 
-    // STEP 2: open doors once we arrive
-    setTimeout(() => {
-        scene2.classList.add('open');
-
-        // STEP 3: after doors open, move to invitation
-        setTimeout(() => {
-            scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 1200); // matches door animation timing
-    }, 700);
-}
+    function goToDetails() {
+        // Skip animation, go straight to scene 3
+        scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
     // Scroll Management
     function scrollToScene(sceneNumber) {
@@ -140,6 +154,12 @@
                 break;
             case 'scene2':
                 currentScene = 2;
+                // Trigger door opening when scene 2 is viewed
+                if (!scene2.classList.contains('open')) {
+                    setTimeout(() => {
+                        scene2.classList.add('open');
+                    }, 300);
+                }
                 break;
             case 'scene3':
                 currentScene = 3;
