@@ -1,469 +1,314 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Compass - Circle 22</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+// COMPASS SCRIPT - Email first, Age/Gender last
 
-        body {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            background-color: #F5F1E8;
-            color: #05081C;
-            line-height: 1.8;
-            min-height: 100vh;
-        }
+// Store user data
+let userData = {
+    firstName: '',
+    email: '',
+    age: '',
+    gender: '',
+    answers: {}
+};
 
-        .page {
-            display: none;
-        }
+let currentQuestion = 0;
 
-        .page.active {
-            display: block;
-        }
+// Wait for DOM to load
+document.addEventListener('DOMContentLoaded', function() {
+    initCompass();
+});
 
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-
-        .compass-logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .compass-logo img {
-            width: 120px;
-            height: auto;
-        }
-
-        h1 {
-            font-size: 48px;
-            color: #8B2E2E;
-            text-align: center;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .tagline {
-            font-size: 22px;
-            text-align: center;
-            font-style: italic;
-            color: #8B2E2E;
-            margin-bottom: 30px;
-        }
-
-        .description {
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .time-estimate {
-            font-size: 16px;
-            text-align: center;
-            color: #6d6d6d;
-            font-style: italic;
-            margin-bottom: 40px;
-        }
-
-        /* Form Styles */
-        form {
-            background: white;
-            padding: 40px;
-            border: 2px solid #8B2E2E;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            font-size: 16px;
-            margin-bottom: 8px;
-            color: #8B2E2E;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 15px;
-            font-size: 16px;
-            border: 2px solid #d4cfc4;
-            background: white;
-            color: #05081C;
-            font-family: 'Georgia', serif;
-        }
-
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: #8B2E2E;
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 15px;
-            background-color: #8B2E2E;
-            color: #F5F1E8;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            font-family: 'Georgia', serif;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-
-        .btn-primary:hover {
-            background-color: #6d2323;
-        }
-
-        .btn-primary:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-        }
-
-        /* Progress Bar */
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #d4cfc4;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #8B2E2E;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        /* Question Styles */
-        .question-number {
-            font-size: 18px;
-            color: #8B2E2E;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .question-text {
-            font-size: 28px;
-            color: #05081C;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        .element-label {
-            font-size: 14px;
-            color: #6d6d6d;
-            font-style: italic;
-            margin-bottom: 30px;
-        }
-
-        #answers-container {
-            margin-bottom: 40px;
-        }
-
-        .answer-option {
-            background: white;
-            border: 2px solid #d4cfc4;
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 18px;
-        }
-
-        .answer-option:hover {
-            border-color: #8B2E2E;
-            background: #fdfcfa;
-        }
-
-        .answer-option.selected {
-            border-color: #8B2E2E;
-            background: #8B2E2E;
-            color: #F5F1E8;
-        }
-
-        .navigation-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: space-between;
-        }
-
-        .btn-secondary {
-            padding: 15px 30px;
-            background: white;
-            color: #8B2E2E;
-            border: 2px solid #8B2E2E;
-            font-size: 16px;
-            cursor: pointer;
-            font-family: 'Georgia', serif;
-            transition: all 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: #8B2E2E;
-            color: #F5F1E8;
-        }
-
-        .btn-secondary:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-
-        /* Results Page */
-        .compass-rose-container {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .result-card {
-            background: white;
-            border: 2px solid #8B2E2E;
-            padding: 30px;
-        }
-
-        .result-card h3 {
-            color: #8B2E2E;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .direction {
-            font-size: 16px;
-            color: #6d6d6d;
-            font-weight: normal;
-        }
-
-        .element-subtitle {
-            font-size: 16px;
-            color: #6d6d6d;
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-
-        .bar-container {
-            width: 100%;
-            height: 30px;
-            background: #d4cfc4;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .bar {
-            height: 100%;
-            background: #8B2E2E;
-            transition: width 1s ease;
-        }
-
-        .score-text {
-            font-size: 18px;
-            font-weight: bold;
-            color: #8B2E2E;
-        }
-
-        .insights-section {
-            background: white;
-            border: 2px solid #8B2E2E;
-            padding: 30px;
-            margin: 40px 0;
-        }
-
-        .insights-section h3 {
-            color: #8B2E2E;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .footer-text {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 16px;
-            color: #6d6d6d;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 40px 15px;
-            }
-
-            h1 {
-                font-size: 36px;
-            }
-
-            .question-text {
-                font-size: 22px;
-            }
-
-            form {
-                padding: 25px;
-            }
-
-            .navigation-buttons {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .btn-secondary {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Initial Form Page - First Name & Email ONLY -->
-    <div id="landing-page" class="page active">
-        <div class="container">
-            <div class="compass-logo">
-                <img src="logo.png" alt="Circle 22">
-            </div>
-            <h1>The Compass</h1>
-            <p class="tagline">Discover your connection blueprint</p>
-            <p class="description">The Compass reveals your four core elements: how you show up, your energy and tempo, what draws you in, and how you hold connection.</p>
-            <p class="time-estimate">Time to complete: 8-10 minutes</p>
+function initCompass() {
+    // Initial form submission (Name + Email)
+    const initialForm = document.getElementById('initial-form');
+    if (initialForm) {
+        initialForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            <form id="initial-form">
-                <div class="form-group">
-                    <label for="first-name">First Name *</label>
-                    <input type="text" id="first-name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" required>
-                </div>
-
-                <button type="submit" class="btn-primary">Begin Your Compass</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Question Pages (Q1-Q22) -->
-    <div id="question-page" class="page">
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress-fill"></div>
-        </div>
-        <div class="container">
-            <div class="question-number" id="question-number"></div>
-            <h2 class="question-text" id="question-text"></h2>
-            <div class="element-label" id="element-label"></div>
-            <div id="answers-container"></div>
-            <div class="navigation-buttons">
-                <button id="prev-btn" class="btn-secondary">Previous</button>
-                <button id="next-btn" class="btn-primary">Next</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Demographics Page (Age & Gender) - AFTER Q22 -->
-    <div id="demographics-page" class="page">
-        <div class="progress-bar">
-            <div class="progress-fill" style="width: 95%;"></div>
-        </div>
-        <div class="container">
-            <h1>Almost Done</h1>
-            <p class="description">Just two more questions to complete your Compass.</p>
+            // Store name and email
+            userData.firstName = document.getElementById('first-name').value;
+            userData.email = document.getElementById('email').value;
             
-            <form id="demographics-form">
-                <div class="form-group">
-                    <label for="age">Age *</label>
-                    <input type="number" id="age" min="18" max="100" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="gender">Gender *</label>
-                    <select id="gender" required>
-                        <option value="">Select...</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Non-binary">Non-binary</option>
-                        <option value="Prefer not to say">Prefer not to say</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="btn-primary">See My Results</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Results Page -->
-    <div id="results-page" class="page">
-        <div class="container">
-            <h1>Your Compass Results</h1>
-            <div class="compass-rose-container">
-                <canvas id="compass-canvas" width="300" height="300"></canvas>
-            </div>
+            console.log('User data collected:', userData); // Debug
             
-            <div class="results-grid">
-                <div class="result-card">
-                    <h3>The Needle <span class="direction">(North)</span></h3>
-                    <p class="element-subtitle">How You Show Up</p>
-                    <div class="bar-container">
-                        <div class="bar" id="needle-bar"></div>
-                    </div>
-                    <p class="score-text" id="needle-score"></p>
-                </div>
+            // Show question page
+            document.getElementById('landing-page').classList.remove('active');
+            document.getElementById('question-page').classList.add('active');
+            
+            // Load first question
+            loadQuestion(0);
+        });
+    }
 
-                <div class="result-card">
-                    <h3>The Rose <span class="direction">(East)</span></h3>
-                    <p class="element-subtitle">Energy & Tempo</p>
-                    <div class="bar-container">
-                        <div class="bar" id="rose-bar"></div>
-                    </div>
-                    <p class="score-text" id="rose-score"></p>
-                </div>
+    // Previous button
+    const prevBtn = document.getElementById('prev-btn');
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                loadQuestion(currentQuestion - 1);
+            }
+        });
+    }
 
-                <div class="result-card">
-                    <h3>The Bearing <span class="direction">(South)</span></h3>
-                    <p class="element-subtitle">What Draws You In</p>
-                    <div class="bar-container">
-                        <div class="bar" id="bearing-bar"></div>
-                    </div>
-                    <p class="score-text" id="bearing-score"></p>
-                </div>
+    // Next button
+    const nextBtn = document.getElementById('next-btn');
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            // Check if answer is selected
+            if (!userData.answers[`q${currentQuestion + 1}`]) {
+                alert('Please select an answer before continuing.');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                loadQuestion(currentQuestion + 1);
+            } else {
+                // After Q22, show demographics page
+                showDemographicsPage();
+            }
+        });
+    }
 
-                <div class="result-card">
-                    <h3>The Anchor <span class="direction">(West)</span></h3>
-                    <p class="element-subtitle">How You Hold Connection</p>
-                    <div class="bar-container">
-                        <div class="bar" id="anchor-bar"></div>
-                    </div>
-                    <p class="score-text" id="anchor-score"></p>
-                </div>
-            </div>
+    // Demographics form
+    const demographicsForm = document.getElementById('demographics-form');
+    if (demographicsForm) {
+        demographicsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Store age and gender
+            userData.age = document.getElementById('age').value;
+            userData.gender = document.getElementById('gender').value;
+            
+            // Calculate and show results
+            calculateResults();
+        });
+    }
+}
 
-            <div class="insights-section">
-                <h3>Your Compatibility Blueprint</h3>
-                <p id="insights-text"></p>
-            </div>
+function loadQuestion(index) {
+    currentQuestion = index;
+    const question = questions[index];
+    
+    // Update progress (questions 1-22 = 10% to 90%)
+    const progress = 10 + ((index + 1) / questions.length) * 80;
+    document.getElementById('progress-fill').style.width = progress + '%';
+    
+    // Update question display
+    document.getElementById('question-number').textContent = `Question ${index + 1} of ${questions.length}`;
+    document.getElementById('question-text').textContent = question.text;
+    document.getElementById('element-label').textContent = question.element;
+    
+    // Render answers
+    const answersContainer = document.getElementById('answers-container');
+    answersContainer.innerHTML = '';
+    
+    question.answers.forEach((answer, i) => {
+        const div = document.createElement('div');
+        div.className = 'answer-option';
+        div.textContent = answer;
+        div.dataset.value = i + 1;
+        
+        // Check if already answered
+        if (userData.answers[`q${index + 1}`] === i + 1) {
+            div.classList.add('selected');
+        }
+        
+        div.addEventListener('click', function() {
+            // Remove previous selection
+            answersContainer.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Select this answer
+            div.classList.add('selected');
+            userData.answers[`q${index + 1}`] = parseInt(div.dataset.value);
+        });
+        
+        answersContainer.appendChild(div);
+    });
+    
+    // Update navigation buttons
+    document.getElementById('prev-btn').disabled = index === 0;
+}
 
-            <p class="footer-text">circle22houston.com</p>
-        </div>
-    </div>
+function showDemographicsPage() {
+    document.getElementById('question-page').classList.remove('active');
+    document.getElementById('demographics-page').classList.add('active');
+}
 
-    <script src="questions.js"></script>
-    <script src="compass-script.js"></script>
-</body>
-</html>
+function calculateResults() {
+    // Calculate scores for each element
+    const scores = {
+        needle: 0,
+        rose: 0,
+        bearing: 0,
+        anchor: 0
+    };
+    
+    questions.forEach((q, index) => {
+        const answer = userData.answers[`q${index + 1}`];
+        scores[q.category] += answer;
+    });
+    
+    // Normalize to 100
+    const counts = { needle: 0, rose: 0, bearing: 0, anchor: 0 };
+    questions.forEach(q => counts[q.category]++);
+    
+    const normalizedScores = {
+        needle: Math.round((scores.needle / (counts.needle * 5)) * 100),
+        rose: Math.round((scores.rose / (counts.rose * 5)) * 100),
+        bearing: Math.round((scores.bearing / (counts.bearing * 5)) * 100),
+        anchor: Math.round((scores.anchor / (counts.anchor * 5)) * 100)
+    };
+    
+    // Store scores
+    userData.needle = normalizedScores.needle;
+    userData.rose = normalizedScores.rose;
+    userData.bearing = normalizedScores.bearing;
+    userData.anchor = normalizedScores.anchor;
+    
+    // Submit to Google Sheets
+    submitToGoogleSheets();
+    
+    // Show results
+    displayResults(normalizedScores);
+}
+
+async function submitToGoogleSheets() {
+    // Prepare data for submission
+    const submissionData = {
+        firstName: userData.firstName,
+        email: userData.email,
+        age: userData.age,
+        gender: userData.gender,
+        ...userData.answers,
+        needle: userData.needle,
+        rose: userData.rose,
+        bearing: userData.bearing,
+        anchor: userData.anchor
+    };
+    
+    // Your Google Apps Script URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec';
+    
+    try {
+        await fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(submissionData)
+        });
+    } catch (error) {
+        console.error('Error submitting to Google Sheets:', error);
+    }
+}
+
+function displayResults(scores) {
+    // Hide demographics page
+    document.getElementById('demographics-page').classList.remove('active');
+    
+    // Show results page
+    document.getElementById('results-page').classList.add('active');
+    
+    // Update bars
+    setTimeout(() => {
+        document.getElementById('needle-bar').style.width = scores.needle + '%';
+        document.getElementById('rose-bar').style.width = scores.rose + '%';
+        document.getElementById('bearing-bar').style.width = scores.bearing + '%';
+        document.getElementById('anchor-bar').style.width = scores.anchor + '%';
+    }, 300);
+    
+    // Update scores
+    document.getElementById('needle-score').textContent = scores.needle + '/100';
+    document.getElementById('rose-score').textContent = scores.rose + '/100';
+    document.getElementById('bearing-score').textContent = scores.bearing + '/100';
+    document.getElementById('anchor-score').textContent = scores.anchor + '/100';
+    
+    // Generate insights
+    const insights = generateInsights(scores);
+    document.getElementById('insights-text').textContent = insights;
+    
+    // Draw compass rose
+    drawCompassRose(scores);
+}
+
+function generateInsights(scores) {
+    const dominant = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+    
+    const insights = {
+        needle: "You show up with clarity and direction. Your communication style is decisive, and you're comfortable taking the lead in connection.",
+        rose: "Your energy drives connection. You bring dynamism and momentum to relationships, keeping things engaging and alive.",
+        bearing: "You're drawn to depth and authenticity. What captures your attention in others reveals what matters most to you.",
+        anchor: "You hold connection with steadiness. Your relationships are built on trust, consistency, and the ability to weather change together."
+    };
+    
+    return insights[dominant];
+}
+
+function drawCompassRose(scores) {
+    const canvas = document.getElementById('compass-canvas');
+    const ctx = canvas.getContext('2d');
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const maxRadius = 120;
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw compass rose
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY - (scores.needle / 100) * maxRadius);
+    ctx.lineTo(centerX + (scores.rose / 100) * maxRadius, centerY);
+    ctx.lineTo(centerX, centerY + (scores.bearing / 100) * maxRadius);
+    ctx.lineTo(centerX - (scores.anchor / 100) * maxRadius, centerY);
+    ctx.closePath();
+    
+    ctx.fillStyle = 'rgba(139, 46, 46, 0.3)';
+    ctx.fill();
+    ctx.strokeStyle = '#8B2E2E';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Draw center circle
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = '#8B2E2E';
+    ctx.fill();
+    
+    // Draw direction lines
+    ctx.strokeStyle = '#d4cfc4';
+    ctx.lineWidth = 1;
+    
+    // North
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(centerX, centerY - maxRadius);
+    ctx.stroke();
+    
+    // East
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(centerX + maxRadius, centerY);
+    ctx.stroke();
+    
+    // South
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(centerX, centerY + maxRadius);
+    ctx.stroke();
+    
+    // West
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(centerX - maxRadius, centerY);
+    ctx.stroke();
+    
+    // Labels
+    ctx.fillStyle = '#8B2E2E';
+    ctx.font = '14px Georgia';
+    ctx.textAlign = 'center';
+    ctx.fillText('N', centerX, centerY - maxRadius - 10);
+    ctx.fillText('E', centerX + maxRadius + 15, centerY + 5);
+    ctx.fillText('S', centerX, centerY + maxRadius + 20);
+    ctx.fillText('W', centerX - maxRadius - 15, centerY + 5);
+}
