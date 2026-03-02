@@ -99,8 +99,8 @@
             // STEP 3: after doors open, move to invitation
             setTimeout(() => {
                 scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 1200); // matches door animation timing
-        }, 2700);
+            }, 2400); // matches door animation timing
+        }, 5400);
     }
 
     // More Details Button - scrolls directly to content
