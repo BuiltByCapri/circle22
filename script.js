@@ -100,7 +100,7 @@
             setTimeout(() => {
                 scene3.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 1200); // matches door animation timing
-        }, 700);
+        }, 2700);
     }
 
     // More Details Button - scrolls directly to content
