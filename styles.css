@@ -223,29 +223,32 @@ body {
     font-weight: 400;
     letter-spacing: 0.05em;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: rgba(255, 255, 255, 0.8);
+    border: 2px solid var(--color-gold);
+    color: var(--color-gold);
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
+    min-width: 180px;
+    text-align: center;
 }
 
 .action-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
-    color: #FFF;
+    background: rgba(184, 151, 90, 0.1);
+    border-color: var(--color-gold);
+    color: var(--color-gold);
 }
 
 .action-btn.primary {
-    background: var(--color-oxblood);
-    border-color: var(--color-oxblood);
-    color: #FFF;
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    color: #05081C;
 }
 
 .action-btn.primary:hover {
-    background: var(--color-oxblood-light);
-    border-color: var(--color-oxblood-light);
+    background: #C9A961;
+    border-color: #C9A961;
+    color: #05081C;
 }
 
 /* Scene 2: Elevator Doors */
