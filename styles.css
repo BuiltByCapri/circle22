@@ -252,6 +252,7 @@ body {
 .scene-doors {
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -355,11 +356,11 @@ body {
 /* Wax Seal */
 .wax-seal {
     position: absolute;
-    top: -40px;
+    top: -60px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     z-index: 10;
 }
 
@@ -372,8 +373,8 @@ body {
 
 /* Wax Seal Fallback */
 .seal-fallback {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     display: none;
     align-items: center;
     justify-content: center;
