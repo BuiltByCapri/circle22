@@ -184,6 +184,8 @@ const questions = [
         text: "You tend to feel most at ease with people who...",
         type: "text",
         placeholder: "Share what helps you feel comfortable..."
+        helperText: "We'll use this to find your best matches at our events."
+
     },
     {
         id: 15,
@@ -192,6 +194,8 @@ const questions = [
         text: "You're least compatible with people who...",
         type: "text",
         placeholder: "Share what doesn't work for you..."
+        helperText: "We'll use this to find your best matches at our events."
+
     },
     {
         id: 16,
@@ -200,7 +204,7 @@ const questions = [
         text: "What's one thing about you that wouldn't come across in a typical dating app profile?",
         type: "text",
         placeholder: "This helps us understand you beyond the Compass scores...",
-        helperText: "Your answer won't affect your results, but it will help us match you with compatible guests."
+        helperText: "We'll use this to find your best matches at our events."
     },
     
     // NEW QUESTIONS - Q17-Q22
