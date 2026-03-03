@@ -183,7 +183,7 @@ const questions = [
         elementLabel: "Help Us Understand You",
         text: "You tend to feel most at ease with people who...",
         type: "text",
-        placeholder: "Share what helps you feel comfortable..."
+        placeholder: "Share what helps you feel comfortable...",
         helperText: "We'll use this to find your best matches at our events."
 
     },
@@ -193,7 +193,7 @@ const questions = [
         elementLabel: "Help Us Understand You",
         text: "You're least compatible with people who...",
         type: "text",
-        placeholder: "Share what doesn't work for you..."
+        placeholder: "Share what doesn't work for you...",
         helperText: "We'll use this to find your best matches at our events."
 
     },
