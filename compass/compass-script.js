@@ -310,6 +310,9 @@ function displayResults(scores) {
     
     // Draw compass rose
     drawCompassRose(scores);
+    
+    // Setup download button
+    setupDownload(scores);
 }
 
 function generateInsights(scores) {
@@ -391,4 +394,123 @@ function drawCompassRose(scores) {
     ctx.fillText('E', centerX + maxRadius + 15, centerY + 5);
     ctx.fillText('S', centerX, centerY + maxRadius + 20);
     ctx.fillText('W', centerX - maxRadius - 15, centerY + 5);
+}
+
+function setupDownload(scores) {
+    const downloadBtn = document.getElementById('download-btn');
+    if (!downloadBtn) return;
+    
+    downloadBtn.addEventListener('click', function() {
+        // Create a canvas for the downloadable card
+        const cardCanvas = document.createElement('canvas');
+        cardCanvas.width = 800;
+        cardCanvas.height = 1000;
+        const ctx = cardCanvas.getContext('2d');
+        
+        // Background
+        ctx.fillStyle = '#F5F1E8';
+        ctx.fillRect(0, 0, 800, 1000);
+        
+        // Title
+        ctx.fillStyle = '#8B2E2E';
+        ctx.font = 'bold 48px Georgia';
+        ctx.textAlign = 'center';
+        ctx.fillText('Your Compass Results', 400, 80);
+        
+        // Name
+        ctx.fillStyle = '#05081C';
+        ctx.font = '24px Georgia';
+        ctx.fillText(userData.firstName, 400, 130);
+        
+        // Draw compass rose (larger)
+        const centerX = 400;
+        const centerY = 320;
+        const maxRadius = 150;
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY - (scores.needle / 100) * maxRadius);
+        ctx.lineTo(centerX + (scores.rose / 100) * maxRadius, centerY);
+        ctx.lineTo(centerX, centerY + (scores.bearing / 100) * maxRadius);
+        ctx.lineTo(centerX - (scores.anchor / 100) * maxRadius, centerY);
+        ctx.closePath();
+        
+        ctx.fillStyle = 'rgba(139, 46, 46, 0.3)';
+        ctx.fill();
+        ctx.strokeStyle = '#8B2E2E';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        
+        // Center circle
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 6, 0, 2 * Math.PI);
+        ctx.fillStyle = '#8B2E2E';
+        ctx.fill();
+        
+        // Direction lines
+        ctx.strokeStyle = '#d4cfc4';
+        ctx.lineWidth = 2;
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX, centerY - maxRadius);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX + maxRadius, centerY);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX, centerY + maxRadius);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX - maxRadius, centerY);
+        ctx.stroke();
+        
+        // Labels
+        ctx.fillStyle = '#8B2E2E';
+        ctx.font = '20px Georgia';
+        ctx.textAlign = 'center';
+        ctx.fillText('N', centerX, centerY - maxRadius - 15);
+        ctx.fillText('E', centerX + maxRadius + 20, centerY + 7);
+        ctx.fillText('S', centerX, centerY + maxRadius + 30);
+        ctx.fillText('W', centerX - maxRadius - 20, centerY + 7);
+        
+        // Scores
+        const scoreY = 520;
+        const lineHeight = 70;
+        
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#8B2E2E';
+        ctx.font = 'bold 24px Georgia';
+        
+        ctx.fillText('The Needle (How You Show Up):', 100, scoreY);
+        ctx.fillText('The Rose (Energy & Tempo):', 100, scoreY + lineHeight);
+        ctx.fillText('The Bearing (What Draws You In):', 100, scoreY + lineHeight * 2);
+        ctx.fillText('The Anchor (How You Hold Connection):', 100, scoreY + lineHeight * 3);
+        
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#05081C';
+        ctx.font = '32px Georgia';
+        
+        ctx.fillText(scores.needle + '/100', 700, scoreY);
+        ctx.fillText(scores.rose + '/100', 700, scoreY + lineHeight);
+        ctx.fillText(scores.bearing + '/100', 700, scoreY + lineHeight * 2);
+        ctx.fillText(scores.anchor + '/100', 700, scoreY + lineHeight * 3);
+        
+        // Footer
+        ctx.fillStyle = '#8B2E2E';
+        ctx.font = '18px Georgia';
+        ctx.textAlign = 'center';
+        ctx.fillText('circle22houston.com', 400, 950);
+        
+        // Download
+        const link = document.createElement('a');
+        link.download = 'compass-results-' + userData.firstName + '.png';
+        link.href = cardCanvas.toDataURL('image/png');
+        link.click();
+    });
 }
