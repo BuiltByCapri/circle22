@@ -316,16 +316,58 @@ function displayResults(scores) {
 }
 
 function generateInsights(scores) {
-    const dominant = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+    // Find dominant and secondary elements
+    const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    const dominant = sorted[0][0];
+    const secondary = sorted[1][0];
+    const dominantScore = sorted[0][1];
+    const secondaryScore = sorted[1][1];
     
-    const insights = {
-        needle: "You show up with clarity and direction. Your communication style is decisive, and you're comfortable taking the lead in connection.",
-        rose: "Your energy drives connection. You bring dynamism and momentum to relationships, keeping things engaging and alive.",
-        bearing: "You're drawn to depth and authenticity. What captures your attention in others reveals what matters most to you.",
-        anchor: "You hold connection with steadiness. Your relationships are built on trust, consistency, and the ability to weather change together."
+    // Determine if there's a clear dominant or if it's balanced
+    const isBalanced = dominantScore - secondaryScore < 15;
+    
+    // Element descriptions
+    const profiles = {
+        needle: {
+            high: "You lead with clarity and directness in connection. Your communication style is straightforward—people know where they stand with you.",
+            low: "You take a measured approach to showing up. You reveal yourself gradually, letting connection unfold at its own pace."
+        },
+        rose: {
+            high: "Your energy is dynamic and engaging. You bring momentum to connection, keeping things alive and moving forward.",
+            low: "You move at a steady, intentional pace. You value depth over intensity and prefer connections that build gradually."
+        },
+        bearing: {
+            high: "You're drawn to substance and depth. What captures your attention reveals what matters most to you—authenticity, curiosity, presence.",
+            low: "You're open to different types of connection. You notice various qualities in others and don't lead with specific criteria."
+        },
+        anchor: {
+            high: "You hold connection with intention and consistency. Once you're invested, you show up reliably and build trust over time.",
+            low: "You stay flexible in how connection develops. You adapt to what the moment requires rather than following a set pattern."
+        }
     };
     
-    return insights[dominant];
+    // Build personalized insight
+    let insight = '';
+    
+    if (isBalanced) {
+        // Balanced profile - describe the interplay
+        insight = `${profiles[dominant].high} ${profiles[secondary].high.charAt(0).toLowerCase() + profiles[secondary].high.slice(1)} Your approach balances both qualities naturally.`;
+    } else {
+        // Clear dominant element
+        insight = profiles[dominant].high;
+        
+        // Add context about their lower scores
+        const lowest = sorted[3][0];
+        const lowestScore = sorted[3][1];
+        
+        if (lowestScore < 40) {
+            insight += ` ${profiles[lowest].low}`;
+        } else {
+            insight += ` You also ${profiles[secondary].high.charAt(0).toLowerCase() + profiles[secondary].high.slice(1)}`;
+        }
+    }
+    
+    return insight;
 }
 
 function drawCompassRose(scores) {
