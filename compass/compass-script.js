@@ -570,35 +570,42 @@ function setupDownload(scores) {
             
             // Convert canvas to blob
             canvas.toBlob(async (blob) => {
-                try {
-                    // Check if Web Share API is available
-                    if (navigator.share && navigator.canShare) {
-                        const file = new File([blob], 'compass-results.png', { type: 'image/png' });
-                        
-                        if (navigator.canShare({ files: [file] })) {
-                            await navigator.share({
-                                files: [file],
-                                title: 'My Compass Results',
-                                text: 'Check out my Circle 22 Compass results!'
-                            });
+                const file = new File([blob], 'compass-results.png', { type: 'image/png' });
+                
+                // Try Web Share API first (works on most mobile browsers)
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            files: [file],
+                            title: 'My Compass Results',
+                            text: 'Check out my Circle 22 Compass results!'
+                        });
+                        return;
+                    } catch (error) {
+                        if (error.name === 'AbortError') {
+                            // User cancelled, that's fine
                             return;
                         }
+                        // If share fails, fall through to download
+                        console.log('Share failed, trying download:', error);
                     }
-                    
-                    // Fallback: Download on mobile if share doesn't work
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = 'compass-results-' + userData.firstName + '.png';
-                    document.body.appendChild(link);
-                    link.click();
+                }
+                
+                // Fallback: Trigger download
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'compass-results-' + userData.firstName + '.png';
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                
+                // Cleanup
+                setTimeout(() => {
                     document.body.removeChild(link);
                     URL.revokeObjectURL(url);
-                    
-                } catch (error) {
-                    console.error('Share failed:', error);
-                    alert('Unable to share. Try the Download button instead.');
-                }
+                }, 100);
+                
             }, 'image/png');
         });
     }
