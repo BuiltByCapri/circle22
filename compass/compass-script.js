@@ -267,7 +267,7 @@ async function submitToGoogleSheets() {
     };
     
     // Your Google Apps Script URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbylIay4e1oJCEwhi4wp3XjWLb25SXFWdr6Kr9YP4lAG9OvEuyA-wJFJWHUZ7ng21JlBvg/exec';
     
     try {
         await fetch(scriptURL, {
