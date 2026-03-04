@@ -267,7 +267,7 @@ async function submitToGoogleSheets() {
     };
     
     // Your Google Apps Script URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbylIay4e1oJCEwhi4wp3XjWLb25SXFWdr6Kr9YP4lAG9OvEuyA-wJFJWHUZ7ng21JlBvg/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxBRyLd0K97SDBZlWdrDo5IFWc3uofwiOLeW5yCHcgyyg-rXWsbO4LodgbAKuFtpHzfTg/exec';
     
     try {
         await fetch(scriptURL, {
@@ -440,10 +440,10 @@ function drawCompassRose(scores) {
 
 function setupDownload(scores) {
     const downloadBtn = document.getElementById('download-btn');
-    if (!downloadBtn) return;
+    const shareBtn = document.getElementById('share-btn');
     
-    downloadBtn.addEventListener('click', function() {
-        // Create a canvas for the downloadable card
+    // Create canvas function (used by both download and share)
+    const createResultsCanvas = () => {
         const cardCanvas = document.createElement('canvas');
         cardCanvas.width = 800;
         cardCanvas.height = 1000;
@@ -549,10 +549,57 @@ function setupDownload(scores) {
         ctx.textAlign = 'center';
         ctx.fillText('circle22houston.com', 400, 950);
         
-        // Download
-        const link = document.createElement('a');
-        link.download = 'compass-results-' + userData.firstName + '.png';
-        link.href = cardCanvas.toDataURL('image/png');
-        link.click();
-    });
+        return cardCanvas;
+    };
+    
+    // Download button (desktop)
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', function() {
+            const canvas = createResultsCanvas();
+            const link = document.createElement('a');
+            link.download = 'compass-results-' + userData.firstName + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
+    
+    // Share button (mobile-friendly)
+    if (shareBtn) {
+        shareBtn.addEventListener('click', async function() {
+            const canvas = createResultsCanvas();
+            
+            // Convert canvas to blob
+            canvas.toBlob(async (blob) => {
+                try {
+                    // Check if Web Share API is available
+                    if (navigator.share && navigator.canShare) {
+                        const file = new File([blob], 'compass-results.png', { type: 'image/png' });
+                        
+                        if (navigator.canShare({ files: [file] })) {
+                            await navigator.share({
+                                files: [file],
+                                title: 'My Compass Results',
+                                text: 'Check out my Circle 22 Compass results!'
+                            });
+                            return;
+                        }
+                    }
+                    
+                    // Fallback: Download on mobile if share doesn't work
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'compass-results-' + userData.firstName + '.png';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    
+                } catch (error) {
+                    console.error('Share failed:', error);
+                    alert('Unable to share. Try the Download button instead.');
+                }
+            }, 'image/png');
+        });
+    }
 }
